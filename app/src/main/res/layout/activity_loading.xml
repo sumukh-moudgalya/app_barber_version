@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".LoadingActivity">
+
+    <ImageView
+        android:id="@+id/loading_activity_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.39"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/loading_activity_intiative_tag_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/architects_daughter"
+        android:text="An initiative by defines"
+
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loading_activity_logo" />
+
+    <TextView
+        android:id="@+id/loading_activity_app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/architects_daughter"
+        android:shadowColor="#050000"
+        android:shadowDx="0.0"
+        android:shadowDy="0.0"
+        android:shadowRadius="8"
+        android:text="Bloomer"
+        android:textColor="#FAF8F8"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/loading_activity_intiative_tag_line"
+        app:layout_constraintEnd_toEndOf="@+id/loading_activity_logo"
+        app:layout_constraintStart_toStartOf="@+id/loading_activity_logo"
+        app:layout_constraintTop_toBottomOf="@+id/loading_activity_logo" />
+</androidx.constraintlayout.widget.ConstraintLayout>

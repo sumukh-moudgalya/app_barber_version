@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">bloomerBarber</string>
+    <string-array name="offers" font="@font/aclonica">
+        <item>Haircuts</item>
+        <item>Saloons</item>
+        <item>Spa</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
