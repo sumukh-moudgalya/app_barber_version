@@ -9,8 +9,9 @@ class Shop (
     val name_shop:String,
     val address:String,
     val city:String,
-    val google_map_link:String
+    val google_map_link:String,
+    val shop_images: ArrayList<String>
         ):Parcelable,
 Serializable{
-    constructor():this("","","","","")
+    constructor():this("","","","","", ArrayList<String>())
 }

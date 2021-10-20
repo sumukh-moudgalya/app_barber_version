@@ -128,20 +128,51 @@
                     app:layout_constraintStart_toStartOf="@+id/activity_shop_adder_city_shop"
                     app:layout_constraintTop_toBottomOf="@+id/activity_shop_adder_city_shop" />
 
+
                 <TextView
                     android:id="@+id/activity_shop_adder_save_button"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="120dp"
+                    android:background="@drawable/button_back_green"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="Save"
-                    android:textSize="24sp"
                     android:textColor="#000000"
-                    android:background="@drawable/button_back_green"
-                    app:layout_constraintEnd_toEndOf="@+id/activity_shop_adder_google_map_link"
-                    app:layout_constraintStart_toStartOf="@+id/activity_shop_adder_google_map_link"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/activity_shop_adder_google_map_link" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="64dp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
+                    android:text="Please Select 4 Images of the Shop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.513"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/activity_shop_adder_select_image_button" />
+
+                <TextView
+                    android:id="@+id/activity_shop_adder_select_image_button"
+                    android:layout_width="234dp"
+                    android:layout_height="53dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/button_back_green"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="Select Images"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.503"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_shop_adder_google_map_link" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
