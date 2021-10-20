@@ -15,6 +15,7 @@ private val TAG="ServiceAdderActivity"
 class ServiceAdderActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
+        getSupportActionBar()?.hide()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_service_adder)
         val service_name: EditText =findViewById(R.id.activity_service_adder_service_name)

@@ -17,6 +17,7 @@ class ShopAdderActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setContentView(R.layout.activity_shop_adder)
         val shop_name: EditText = findViewById(R.id.activity_shop_adder_name_shop)
         val address:EditText=findViewById(R.id.activity_shop_adder_shop_address)

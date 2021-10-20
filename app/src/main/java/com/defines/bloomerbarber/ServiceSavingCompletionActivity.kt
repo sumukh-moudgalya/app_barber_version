@@ -10,6 +10,7 @@ import android.os.Looper
 class ServiceSavingCompletionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setContentView(R.layout.activity_service_saving_completion)
         Handler(Looper.getMainLooper()).postDelayed({
             val intent=Intent(this,MainActivity::class.java)
