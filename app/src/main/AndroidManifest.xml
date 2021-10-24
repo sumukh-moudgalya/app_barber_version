@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BloomerBarber" >
         <activity
-            android:name=".WalletAcitivity"
+            android:name=".WalletActivity"
             android:exported="true" />
         <activity
             android:name=".SearchActivity"
