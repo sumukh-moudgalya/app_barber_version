@@ -11,4 +11,11 @@
     <string name="get_otp">get otp</string>
     <string name="enter_otp">Enter OTP</string>
     <string name="confirm_otp">Confirm OTP</string>
+
+    <string-array name="search_hints" font="@font/aclonica">
+        <item>Search by saloon names</item>
+        <item>Search by services</item>
+        <item>Search by spa names</item>
+        <item>Search by artists</item>
+    </string-array>
 </resources>
