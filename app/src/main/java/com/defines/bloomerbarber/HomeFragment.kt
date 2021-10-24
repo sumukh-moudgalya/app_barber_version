@@ -53,7 +53,7 @@ class HomeFragment : Fragment() {
 
         }
         wallet_nav.setOnClickListener {
-            val intent=Intent(activity,WalletActivity::class.java)
+            val intent=Intent(activity,BarberWalletActivity::class.java)
             startActivity(intent)
         }
         // Inflate the layout for this fragment
