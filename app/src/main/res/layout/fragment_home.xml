@@ -112,7 +112,7 @@
 
 
                     <ImageView
-                        android:id="@+id/fragment_home_cart_nav_button"
+                        android:id="@+id/fragment_home_wallet_nav_button"
                         android:layout_width="40dp"
                         android:layout_height="0dp"
                         android:layout_marginEnd="8dp"
@@ -130,7 +130,7 @@
                         android:layout_marginBottom="8dp"
                         android:background="@drawable/search_view_background"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/fragment_home_cart_nav_button"
+                        app:layout_constraintEnd_toStartOf="@+id/fragment_home_wallet_nav_button"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 

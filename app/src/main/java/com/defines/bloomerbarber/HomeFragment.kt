@@ -41,7 +41,7 @@ class HomeFragment : Fragment() {
         fetchlocation(myfrag)
         fetchlocation(myfrag)
         val profile_pic_view: ImageView = myfrag.findViewById(R.id.fragment_home_profile_pic)
-
+        val wallet_nav:ImageView=myfrag.findViewById(R.id.fragment_home_wallet_nav_button)
         val user = FirebaseAuth.getInstance().currentUser
 
         Glide.with(this).load(user!!.photoUrl.toString()).circleCrop().into(profile_pic_view)
@@ -51,6 +51,10 @@ class HomeFragment : Fragment() {
             val intent = Intent(activity, SearchActivity::class.java)
             startActivity(intent)
 
+        }
+        wallet_nav.setOnClickListener {
+            val intent=Intent(activity,WalletActivity::class.java)
+            startActivity(intent)
         }
         // Inflate the layout for this fragment
         return myfrag

@@ -69,13 +69,7 @@ class ServicesManagerFragment: Fragment() {
                 }
 
 
-//                adapter.setOnItemClickListener{item,view->
-//                    val userItem=item as GraphInfo
-//                    val intent=Intent(view.context,LoadGraph::class.java)
-//                    intent.putExtra(GRAPH_VALUES,userItem.graph as Serializable)
-//                    startActivity(intent)
-//                    finish()
-//                }
+
 
                 fragment_services_manager_services_recycler_view.adapter=adapter
             }
