@@ -2,7 +2,6 @@ package com.defines.bloomerbarber
 
 
 import android.content.Intent
-import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +10,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -117,12 +117,26 @@ class LoginActivity : AppCompatActivity() {
                         email.toString(),"english",userType,phoneNumber.toString(),isshopDetails
                     )
 
-                    val intent= Intent(this,ShopAdderActivity::class.java)
-                    startActivity(intent)
-                    finish()
+
                     ref.setValue(customer).addOnSuccessListener {
                         Log.d(TAG, "Finally the user is saved to database")
                     }.addOnFailureListener{
+                        Log.d(TAG,"Failed to add{${it.message}")
+                    }
+                    val ref2= FirebaseDatabase.getInstance().getReference("/wallet_barber/$uid")
+                    val walletId= "BAR$uid"
+                    val balance=0.0
+                    val wallet=Wallet(
+                        walletId,
+                        balance
+                    )
+                    ref2.setValue(wallet).addOnSuccessListener {
+                        Log.d(TAG, "Finally the user is saved to database")
+                        val intent= Intent(this,ShopAdderActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }.addOnFailureListener{
+                        Toast.makeText(this,"Unknown Error!Try again after some time",Toast.LENGTH_SHORT).show()
                         Log.d(TAG,"Failed to add{${it.message}")
                     }
                 } else {

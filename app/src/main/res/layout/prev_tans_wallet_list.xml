@@ -5,46 +5,113 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/prev_trans_wallet_list_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_semibold"
-        android:text="26 October , 2021"
-        android:textSize="30sp"
+    <ImageView
+        android:id="@+id/prev_trans_wallet_list_trans_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/add_money_wallet" />
+
+    <TextView
+        android:id="@+id/prev_trans_wallet_list_trans_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/open_sans_semibold"
+        android:text="Transaction type"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/prev_trans_wallet_list_trans_image"
+        app:layout_constraintEnd_toStartOf="@+id/preav_trans_wallet_list_amount"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/prev_trans_wallet_list_current_balance"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:background="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prev_trans_wallet_list_transaction_id"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/prev_trans_wallet_list_time"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="9:48 AM"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/prev_trans_wallet_list_date"
+        android:layout_marginTop="8dp"
+        android:text="Time"
+        android:textColor="@color/hint"
+        app:layout_constraintBottom_toBottomOf="@+id/prev_trans_wallet_list_trans_image"
+        app:layout_constraintEnd_toEndOf="@+id/prev_trans_wallet_list_trans_type"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/prev_trans_wallet_list_date"
+        app:layout_constraintStart_toStartOf="@+id/prev_trans_wallet_list_trans_type"
+        app:layout_constraintTop_toBottomOf="@+id/prev_trans_wallet_list_trans_type" />
+
+    <TextView
+        android:id="@+id/prev_trans_wallet_list_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/prev_trans_wallet_list_time"
+        app:layout_constraintTop_toBottomOf="@+id/prev_trans_wallet_list_time"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/preav_trans_wallet_list_amount"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="left"
-        android:text="Order Value"
-        android:textColor="@color/black"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Amount"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/prev_trans_wallet_list_time" />
+        app:layout_constraintTop_toTopOf="@+id/prev_trans_wallet_list_trans_image"
+        app:layout_constraintVertical_bias="0.0" />
 
+    <TextView
+        android:id="@+id/prev_trans_wallet_list_transaction_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/preav_trans_wallet_list_amount"
+        app:layout_constraintVertical_bias="0.0" />
 
-
+    <TextView
+        android:id="@+id/prev_trans_wallet_list_current_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="TextView"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/prev_trans_wallet_list_trans_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prev_trans_wallet_list_trans_image" />
 </androidx.constraintlayout.widget.ConstraintLayout>

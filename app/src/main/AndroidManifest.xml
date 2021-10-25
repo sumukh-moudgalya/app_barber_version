@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BloomerBarber">
         <activity
+            android:name=".WalletAddWithdrawActivity"
+            android:exported="true" />
+        <activity
             android:name=".BarberWalletActivity"
             android:exported="true" />
         <activity

@@ -12,6 +12,8 @@
     <color name="primary">#FF5C58</color>
     <color name="hint">#808080</color>
     <color name="tonalBlue">#84c9fb</color>
+    <color name="green">#00FF00</color>
+    <color name="red">#FF0000</color>
 
     <!--    #fff0f0-->
 </resources>
