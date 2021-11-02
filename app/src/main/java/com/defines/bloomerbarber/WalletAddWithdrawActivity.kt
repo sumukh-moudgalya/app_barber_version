@@ -21,6 +21,7 @@ import java.util.*
 class WalletAddWithdrawActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        getSupportActionBar()?.hide()
         setContentView(R.layout.activity_wallet_add_withdraw)
         val transType = intent.extras!!.getSerializable(WALLET_TRANS_TYPE) as String
         val wallet = MainActivity.currentWallet

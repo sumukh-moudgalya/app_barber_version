@@ -31,6 +31,7 @@ class BarberWalletActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        getSupportActionBar()?.hide()
         setContentView(R.layout.activity_barber_wallet)
         auth = FirebaseAuth.getInstance()
         val wallet = MainActivity.currentWallet
@@ -50,13 +51,14 @@ class BarberWalletActivity : AppCompatActivity() {
             val intent = Intent(this, WalletAddWithdrawActivity::class.java)
             intent.putExtra(WALLET_TRANS_TYPE, "WITHDRAW")
             startActivity(intent)
+            finish()
         }
 
         add_money_button.setOnClickListener {
             val intent = Intent(this, WalletAddWithdrawActivity::class.java)
             intent.putExtra(WALLET_TRANS_TYPE, "ADD")
             startActivity(intent)
-
+            finish()
         }
     }
 

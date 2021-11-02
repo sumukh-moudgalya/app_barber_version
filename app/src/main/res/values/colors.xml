@@ -14,6 +14,7 @@
     <color name="tonalBlue">#84c9fb</color>
     <color name="green">#00FF00</color>
     <color name="red">#FF0000</color>
+    <color name="pending">#eed202</color>
 
     <!--    #fff0f0-->
 </resources>
