@@ -1,8 +1,10 @@
 package com.defines.bloomerbarber
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.defines.bloomerbarber.MainActivity.Companion.BOOKING_ELEMENT_KEY
@@ -34,10 +36,15 @@ class BookingAppointmentDetailsActivity : AppCompatActivity() {
         val totalTimeText: TextView =findViewById(R.id.activity_booking_appointment_details_total_time)
         val costBeforeTextText:TextView =findViewById(R.id.activity_booking_appointment_details_cost_before_tax)
         val finalCostText:TextView=findViewById(R.id.activity_booking_appointment_details_final_cost)
+        val backButton:ImageView=findViewById(R.id.activity_booking_appointment_details_back_button)
+
+
         totalCost=bookingElement.total_cost
         totalTime=bookingElement.total_time
 
-
+        backButton.setOnClickListener {
+           onBackPressed()
+        }
 
         for(x in array_service){
             if(x.name in count){

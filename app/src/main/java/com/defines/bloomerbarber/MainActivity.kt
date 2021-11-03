@@ -84,10 +84,12 @@ class MainActivity : AppCompatActivity() {
                 val requestDate:TextView=dialog.findViewById(R.id.incoming_appointment_request_layout_date)
                 val requestTime:TextView=dialog.findViewById(R.id.incoming_appointment_request_layout_time)
                 val averageTime:TextView=dialog.findViewById(R.id.incoming_appointment_request_layout_avg_time)
+                val requestId:TextView=dialog.findViewById(R.id.incoming_appointment_request_layout_request_id)
 
                 requestTotal.text="₹"+bookingElement.total_cost.toString()
                 requestDate.text=bookingElement.date
                 averageTime.text=bookingElement.total_time.toString()+" minutes"
+                requestId.text=bookingElement.order_id
                 val hour=bookingElement.timeSlot.subSequence(0,2).toString()
                 var minute=bookingElement.timeSlot.subSequence(2,4).toString()
                 if(hour.toInt() >=12){
@@ -106,6 +108,7 @@ class MainActivity : AppCompatActivity() {
                     val intent= Intent(mainActivity,BookingAppointmentDetailsActivity::class.java)
                     intent.putExtra(BOOKING_ELEMENT_KEY, bookingElement as Serializable)
                     startActivity(intent)
+                    dialog.dismiss()
                 }
 
                 dialog.show()
