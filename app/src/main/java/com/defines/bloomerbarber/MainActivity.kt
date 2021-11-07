@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
     private fun listenForIncomingOrderRequests(mainActivity: MainActivity) {
         val uid = FirebaseAuth.getInstance().currentUser!!.uid
         val ref =
-            FirebaseDatabase.getInstance().getReference("barber_orders/pending_confirmation/$uid")
+            FirebaseDatabase.getInstance().getReference("barber_orders/$uid/pending_confirmation/")
         ref.addChildEventListener(object : ChildEventListener {
 
 

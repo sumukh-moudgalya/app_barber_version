@@ -15,6 +15,7 @@
     <color name="green">#00FF00</color>
     <color name="red">#FF0000</color>
     <color name="pending">#eed202</color>
+    <color name="confirmed">#a020f0</color>
 
     <!--    #fff0f0-->
 </resources>

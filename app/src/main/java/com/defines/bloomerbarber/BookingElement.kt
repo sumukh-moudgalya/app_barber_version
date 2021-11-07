@@ -16,7 +16,7 @@ class BookingElement(
     val date: String,
     val timeSlot: String,
     val timeStamp: String,
-    val orderStatus: String
+    var orderStatus: String
 
 
 ) : Parcelable,

@@ -3,11 +3,18 @@ package com.defines.bloomerbarber
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.defines.bloomerbarber.MainActivity.Companion.BOOKING_ELEMENT_KEY
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -37,7 +44,52 @@ class BookingAppointmentDetailsActivity : AppCompatActivity() {
         val costBeforeTextText:TextView =findViewById(R.id.activity_booking_appointment_details_cost_before_tax)
         val finalCostText:TextView=findViewById(R.id.activity_booking_appointment_details_final_cost)
         val backButton:ImageView=findViewById(R.id.activity_booking_appointment_details_back_button)
+        val confirmAppointment:TextView=findViewById(R.id.activity_booking_appointment_details_confirm_button)
+        val confirmCardView: CardView=findViewById(R.id.activity_booking_appointment_details_confrim_cancel_cardview)
+        val orderStatusText:TextView=findViewById(R.id.activity_booking_appointment_details_status_text)
+        if(bookingElement.orderStatus=="Confirmed"){
+            confirmCardView.visibility = View.GONE
+            orderStatusText.text="Appointment Confirmed"
+            orderStatusText.setTextColor(ContextCompat.getColor(this,R.color.white))
+            orderStatusText.background=ContextCompat.getDrawable(this, R.drawable.confirmed_back_ground)
+        }
 
+        confirmAppointment.setOnClickListener{
+            val uid= FirebaseAuth.getInstance().currentUser!!.uid
+            val refDelBarber=FirebaseDatabase.getInstance().getReference("/barber_orders/$uid/pending_confirmation/${bookingElement.timeStamp}")
+            Toast.makeText(this,"clicked",Toast.LENGTH_SHORT).show()
+            refDelBarber.removeValue().addOnSuccessListener {
+                Log.d(TAG,"removed value from the ref")
+            }.addOnFailureListener {
+                Log.d(TAG,"Some error in database")
+            }
+
+            val refDelUser=FirebaseDatabase.getInstance().getReference("users_orders/${bookingElement.user_uid}/pending_confirmation/${bookingElement.timeStamp}")
+            refDelUser.removeValue().addOnSuccessListener {
+                Log.d(TAG,"removed value from the user ref")
+            }.addOnFailureListener {
+                Log.d(TAG,"Some error in database")
+            }
+            bookingElement.orderStatus="Confirmed"
+            val refAddBarber=FirebaseDatabase.getInstance().getReference("/barber_orders/$uid/confirmed/${bookingElement.timeStamp}")
+            val refAddUser=FirebaseDatabase.getInstance().getReference("users_orders/${bookingElement.user_uid}/confirmed/${bookingElement.timeStamp}")
+            refAddBarber.setValue(bookingElement).addOnSuccessListener {
+                Log.d(TAG,"Value has been moved to confirmed path")
+            }.addOnFailureListener {
+                Log.d(TAG,"Failure moving data")
+            }
+            refAddUser.setValue(bookingElement).addOnSuccessListener {
+                Log.d(TAG,"Value has been moved to confirmed user path")
+                val intent= Intent(this,AppointmentConfirmationActivity::class.java)
+                startActivity(intent)
+                finish()
+            }.addOnFailureListener {
+                Log.d(TAG,"Failure moving data")
+            }
+
+
+
+        }
 
         totalCost=bookingElement.total_cost
         totalTime=bookingElement.total_time
@@ -57,6 +109,7 @@ class BookingAppointmentDetailsActivity : AppCompatActivity() {
         val added_service = ArrayList<String>()
 
         val adapter = GroupAdapter<GroupieViewHolder>()
+
 
         for ( x in array_service){
             if (x.name !in added_service){
