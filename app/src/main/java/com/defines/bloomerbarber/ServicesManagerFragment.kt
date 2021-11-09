@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -25,6 +26,7 @@ class ServicesManagerFragment: Fragment() {
     // TODO: Rename and change types of parameters
 
 
+
     private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
@@ -35,7 +37,8 @@ class ServicesManagerFragment: Fragment() {
         val myfrag=inflater.inflate(R.layout.fragment_services_manager, container, false)
         auth=FirebaseAuth.getInstance()
         val serviceButton: TextView =myfrag.findViewById(R.id.fragment_service_manager_add_service_button)
-        add_service_info(auth)
+
+        add_service_info(auth,activity)
         serviceButton.setOnClickListener {
             val intent= Intent(activity,ServiceAdderActivity::class.java)
             startActivity(intent)
@@ -44,7 +47,7 @@ class ServicesManagerFragment: Fragment() {
         return myfrag
     }
 
-    private fun add_service_info(auth: FirebaseAuth) {
+    private fun add_service_info(auth: FirebaseAuth, activity: FragmentActivity?) {
         val currentUser=auth.currentUser
         val uid=currentUser!!.uid
         val ref=FirebaseDatabase.getInstance().getReference("/services/$uid").orderByKey()
@@ -56,7 +59,7 @@ class ServicesManagerFragment: Fragment() {
                     Log.d("PreviousTest","fetch_users${it.toString()}")
                     val graph=it.getValue(ServiceOffered::class.java)
                     if(graph!=null){
-                        adapter.add(ServiceInfo(graph))
+                        adapter.add(ServiceInfo(graph,activity))
 
                     }else{
                         Toast.makeText(activity,"No services has been added yet",Toast.LENGTH_SHORT).show()
@@ -91,13 +94,20 @@ class ServicesManagerFragment: Fragment() {
     }
 
 
-    class ServiceInfo(val service:ServiceOffered):Item<GroupieViewHolder>(){
+    class ServiceInfo(val service: ServiceOffered, val activity: FragmentActivity?):Item<GroupieViewHolder>(){
         override fun bind(viewHolder: GroupieViewHolder, position: Int) {
             viewHolder.itemView.service_list_service_name.text=service.name
             viewHolder.itemView.service_list_cost.text=service.cost.toString()
             viewHolder.itemView.service_list_description.text=service.description
             viewHolder.itemView.service_list_average_time.text=service.avgTime.toString()
+            val modifydelete:TextView=viewHolder.itemView.findViewById(R.id.service_list_modify_or_delete_button)
 
+
+            modifydelete.setOnClickListener {
+                val intent=Intent(activity,ServiceModifyDeleteActivity::class.java)
+                intent.putExtra(MainActivity.SERVICE_KEY, service as Serializable)
+                activity!!.startActivity(intent)
+            }
         }
 
         override fun getLayout(): Int {

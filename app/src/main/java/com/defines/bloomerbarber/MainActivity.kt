@@ -19,9 +19,9 @@ class MainActivity : AppCompatActivity() {
     companion object {
         var currentWallet: Wallet? = Wallet()
         val BOOKING_ELEMENT_KEY: String = "BOOKING_ELEMENT_KEY"
+        val SERVICE_KEY:String="SERVICE_KEY"
     }
-//    hello
-    // mahendhar
+
 
     override fun onResume() {
 

@@ -28,9 +28,10 @@ class ServiceAdderActivity : AppCompatActivity() {
         save_service_button.setOnClickListener{
             val user=auth.currentUser
             val uid=user!!.uid
+            val timeStamp=(System.currentTimeMillis()/1000).toString()
             var ref=FirebaseDatabase.getInstance().getReference("services/$uid")
-            val key=ref.push().key
-             ref=FirebaseDatabase.getInstance().getReference("services/$uid/$key")
+
+             ref=FirebaseDatabase.getInstance().getReference("services/$uid/$timeStamp")
             if (service_name.length()==0){
                 Toast.makeText(this,"service name is empty",Toast.LENGTH_SHORT).show()
             }else if (cost_service.length()==0){
@@ -64,11 +65,13 @@ class ServiceAdderActivity : AppCompatActivity() {
 
                 if (isTimeInt){
                     val desc=description.text.toString()
+
                     val service_to_be_added=ServiceOffered(
                         name,
                         cost,
                         time,
-                        desc
+                        desc,
+                        timeStamp
                     )
 
                     ref.setValue(service_to_be_added).addOnSuccessListener {

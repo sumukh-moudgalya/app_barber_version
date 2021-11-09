@@ -9,7 +9,8 @@ class ServiceOffered(
     val name: String,
     val cost: Double,
     val avgTime: Int,
-    val description: String
+    val description: String,
+    val timeStamp:String
 ) : Parcelable, Serializable {
-    constructor() : this("NULL", 0.0, 0, "NULL")
+    constructor() : this("NULL", 0.0, 0, "NULL","")
 }

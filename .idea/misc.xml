@@ -49,6 +49,7 @@
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/activity_login.xml" value="0.20520833333333333" />
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/activity_service_adder.xml" value="0.34375" />
+        <entry key="..\:/bloomerBarber/app/src/main/res/layout/activity_service_modify_delete.xml" value="0.29362880886426596" />
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/activity_service_saving_completion.xml" value="0.36666666666666664" />
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/activity_shop_adder.xml" value="0.36666666666666664" />
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/activity_wallet_activity.xml" value="0.2347560975609756" />
@@ -61,9 +62,9 @@
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/fragment_services_manager.xml" value="0.1" />
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/icoming_appointment_request_layout.xml" value="0.1" />
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/incoming_appointment_request_layout.xml" value="0.36666666666666664" />
-        <entry key="..\:/bloomerBarber/app/src/main/res/layout/pending_appointment_list.xml" value="0.336" />
+        <entry key="..\:/bloomerBarber/app/src/main/res/layout/pending_appointment_list.xml" value="0.3081395348837209" />
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/prev_tans_wallet_list.xml" value="0.22" />
-        <entry key="..\:/bloomerBarber/app/src/main/res/layout/service_list.xml" value="0.36666666666666664" />
+        <entry key="..\:/bloomerBarber/app/src/main/res/layout/service_list.xml" value="0.2789473684210526" />
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/service_viewing_list.xml" value="0.1" />
       </map>
     </option>
