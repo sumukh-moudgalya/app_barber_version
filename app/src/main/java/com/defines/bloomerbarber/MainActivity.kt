@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
                 val requestTotal:TextView=dialog.findViewById(R.id.incoming_appointment_request_layout_total_amount)
                 val requestDate:TextView=dialog.findViewById(R.id.incoming_appointment_request_layout_date)
                 val requestTime:TextView=dialog.findViewById(R.id.incoming_appointment_request_layout_time)
-                val averageTime:TextView=dialog.findViewById(R.id.incoming_appointment_request_layout_avg_time)
+                val averageTime:TextView=dialog.findViewById(R.id.incoming_appointment_request_layout_total_avg_time)
                 val requestId:TextView=dialog.findViewById(R.id.incoming_appointment_request_layout_request_id)
 
                 requestTotal.text="₹"+bookingElement.total_cost.toString()
