@@ -11,11 +11,16 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/activity_login.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/activity_main.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/activity_otp_mobile_number.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/activity_search.xml" value="0.11875" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/activity_service_adder.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/activity_service_saving_completion.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/activity_shop_adder.xml" value="0.176" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/activity_wallet_add_withdraw.xml" value="0.11875" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/confirmed_appointment_list.xml" value="0.2" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/fragment_home.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/fragment_orders.xml" value="0.1203125" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/fragment_services_manager.xml" value="0.11875" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/incoming_appointment_request_layout.xml" value="0.144" />
         <entry key="..\:/bloomerBarber/app/src/main/res/drawable-mdpi/search_view_background.xml" value="0.3078125" />
         <entry key="..\:/bloomerBarber/app/src/main/res/drawable-v24/about_icon.xml" value="0.14907407407407408" />
         <entry key="..\:/bloomerBarber/app/src/main/res/drawable-v24/button_back_green.xml" value="0.14907407407407408" />
