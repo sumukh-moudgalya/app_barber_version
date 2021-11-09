@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         var currentWallet: Wallet? = Wallet()
         val BOOKING_ELEMENT_KEY: String = "BOOKING_ELEMENT_KEY"
     }
-//    hello
+//    hello world
 
     override fun onResume() {
 
