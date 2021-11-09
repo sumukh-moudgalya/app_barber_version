@@ -21,6 +21,12 @@ class MainActivity : AppCompatActivity() {
         val BOOKING_ELEMENT_KEY: String = "BOOKING_ELEMENT_KEY"
     }
 
+    override fun onResume() {
+
+//        recreate()
+        super.onResume()
+    }
+
     private lateinit var bottomNavigation: MeowBottomNavigation
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
