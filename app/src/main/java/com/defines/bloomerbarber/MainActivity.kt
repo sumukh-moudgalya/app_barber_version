@@ -8,18 +8,22 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import java.io.Serializable
-private val TAG="MainActivity"
+import java.text.SimpleDateFormat
+
+private val TAG = "MainActivity"
+
 class MainActivity : AppCompatActivity() {
     companion object {
         var currentWallet: Wallet? = Wallet()
         val BOOKING_ELEMENT_KEY: String = "BOOKING_ELEMENT_KEY"
-        val SERVICE_KEY:String="SERVICE_KEY"
+        val SERVICE_KEY: String = "SERVICE_KEY"
     }
 
 
@@ -34,12 +38,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         window.statusBarColor = ContextCompat.getColor(this, R.color.primary)
-        Log.d(TAG,"Mainctoasasdasdadadasdasdsss")
+        Log.d(TAG, "Mainctoasasdasdadadasdasdsss")
         setContentView(R.layout.activity_main)
         addFragment(HomeFragment.newInstance(), true)
         fetchWalletBarber()
         listenForIncomingOrderRequests(this)
-
+        checkForcompletedOrders(this)
 //        Connecting bottom navigation
         bottomNavigation = findViewById(R.id.bottom_navigation)
         bottomNavigation.show(2)
@@ -71,6 +75,59 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun checkForcompletedOrders(mainActivity: MainActivity) {
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+        val ref = FirebaseDatabase.getInstance().getReference("barber_orders/$uid/confirmed")
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach {
+                   val bookingElement=it.getValue(BookingElement::class.java)
+                    if(bookingElement!=null){
+                        val hour = bookingElement.timeSlot.subSequence(0, 2).toString()
+                        var minute = bookingElement.timeSlot.subSequence(2, 4).toString()
+
+                        val date=bookingElement.date
+                        val time=hour+":"+minute
+                        val timeSlot=date +" "+time
+                        val dateFormatter= SimpleDateFormat("MM/dd/yyyy hh:mm")
+                        val timeSlotTimeRaw=dateFormatter.parse(timeSlot)
+                        Log.d(TAG,"Time=${timeSlotTimeRaw.getTime()/1000} date=$timeSlot")
+                        val timeSlotTimeStamp=timeSlotTimeRaw.getTime()/1000
+                        val completeTimeStamp=timeSlotTimeStamp+(bookingElement.total_time*60)+(10*60)
+                        val currentTime=System.currentTimeMillis()/1000
+                        Log.d(TAG,"currTime====$currentTime")
+                        if(currentTime>=completeTimeStamp){
+                            ref.child("${bookingElement.timeStamp}").removeValue().addOnSuccessListener {
+                                val refUserPending=FirebaseDatabase.getInstance().getReference("users_orders/${bookingElement.user_uid}/confirmed/${bookingElement.timeStamp}")
+                                refUserPending.removeValue()
+
+                                bookingElement.orderStatus="completed"
+                                val refCompletedBarber=FirebaseDatabase.getInstance().getReference("barber_orders/$uid/completed/{${bookingElement.timeStamp}")
+                                refCompletedBarber.setValue(bookingElement).addOnSuccessListener {
+                                    Log.d(TAG,"refCompletedBarber has been updated")
+                                    val refUserCompleted=FirebaseDatabase.getInstance().getReference("users_orders/${bookingElement.user_uid}/completed/${bookingElement.timeStamp}")
+                                    refUserCompleted.setValue(bookingElement).addOnSuccessListener {
+                                        Log.d(TAG,"refUserCompleted has been updated")
+                                    }
+                                }
+                            }
+
+
+                        }
+
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(mainActivity, "Error in database", Toast.LENGTH_SHORT).show()
+
+            }
+
+        })
+
+    }
+
     private fun listenForIncomingOrderRequests(mainActivity: MainActivity) {
         val uid = FirebaseAuth.getInstance().currentUser!!.uid
         val ref =
@@ -88,32 +145,38 @@ class MainActivity : AppCompatActivity() {
                 dismissButton.setOnClickListener {
                     dialog.cancel()
                 }
-                val requestTotal:TextView=dialog.findViewById(R.id.incoming_appointment_request_layout_total_amount)
-                val requestDate:TextView=dialog.findViewById(R.id.incoming_appointment_request_layout_date)
-                val requestTime:TextView=dialog.findViewById(R.id.incoming_appointment_request_layout_time)
-                val averageTime:TextView=dialog.findViewById(R.id.incoming_appointment_request_layout_total_avg_time)
-                val requestId:TextView=dialog.findViewById(R.id.incoming_appointment_request_layout_request_id)
+                val requestTotal: TextView =
+                    dialog.findViewById(R.id.incoming_appointment_request_layout_total_amount)
+                val requestDate: TextView =
+                    dialog.findViewById(R.id.incoming_appointment_request_layout_date)
+                val requestTime: TextView =
+                    dialog.findViewById(R.id.incoming_appointment_request_layout_time)
+                val averageTime: TextView =
+                    dialog.findViewById(R.id.incoming_appointment_request_layout_total_avg_time)
+                val requestId: TextView =
+                    dialog.findViewById(R.id.incoming_appointment_request_layout_request_id)
 
-                requestTotal.text="₹"+bookingElement.total_cost.toString()
-                requestDate.text=bookingElement.date
-                averageTime.text=bookingElement.total_time.toString()+" minutes"
-                requestId.text=bookingElement.order_id
-                val hour=bookingElement.timeSlot.subSequence(0,2).toString()
-                var minute=bookingElement.timeSlot.subSequence(2,4).toString()
-                if(hour.toInt() >=12){
-                    minute+=" pm"
-                }else{
-                    minute+=" am"
+                requestTotal.text = "₹" + bookingElement.total_cost.toString()
+                requestDate.text = bookingElement.date
+                averageTime.text = bookingElement.total_time.toString() + " minutes"
+                requestId.text = bookingElement.order_id
+                val hour = bookingElement.timeSlot.subSequence(0, 2).toString()
+                var minute = bookingElement.timeSlot.subSequence(2, 4).toString()
+                if (hour.toInt() >= 12) {
+                    minute += " pm"
+                } else {
+                    minute += " am"
                 }
 
-                requestTime.text=hour+" "+minute
+                requestTime.text = hour + " " + minute
 
-                val navToDetailsOrder:TextView=dialog.findViewById(R.id.incoming_appointment_request_layout_nav_button)
+                val navToDetailsOrder: TextView =
+                    dialog.findViewById(R.id.incoming_appointment_request_layout_nav_button)
 
                 navToDetailsOrder.setOnClickListener {
-                    Log.d(TAG,"Nav button clicked")
+                    Log.d(TAG, "Nav button clicked")
 
-                    val intent= Intent(mainActivity,BookingAppointmentDetailsActivity::class.java)
+                    val intent = Intent(mainActivity, BookingAppointmentDetailsActivity::class.java)
                     intent.putExtra(BOOKING_ELEMENT_KEY, bookingElement as Serializable)
                     startActivity(intent)
                     dialog.dismiss()
