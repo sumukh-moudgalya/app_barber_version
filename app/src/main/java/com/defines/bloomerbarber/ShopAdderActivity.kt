@@ -1,6 +1,7 @@
 package com.defines.bloomerbarber
 
 import android.app.ProgressDialog
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
@@ -8,12 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.format.DateFormat.format
 import android.util.Log
+import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -29,6 +29,9 @@ class ShopAdderActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     var count=0
     var array=ArrayList<String>()
+
+    val timings = HashMap<String, ArrayList<String>>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -39,14 +42,85 @@ class ShopAdderActivity : AppCompatActivity() {
         val city: EditText = findViewById(R.id.activity_shop_adder_city_shop)
         val save_button: TextView = findViewById(R.id.activity_shop_adder_save_button)
         val open_image=findViewById<TextView>(R.id.activity_shop_adder_select_image_button)
-
-
-
-
-
         val bottomAnim: Animation = AnimationUtils.loadAnimation(this, R.anim.top_anim)
+        val mon_switch=findViewById<Switch>(R.id.activity_shop_adder_monday_switch)
+        val tues_switch=findViewById<Switch>(R.id.activity_shop_adder_tuesday_switch)
+        val wednes_switch=findViewById<Switch>(R.id.activity_shop_adder_wednesday_switch)
+        val thur_switch=findViewById<Switch>(R.id.activity_shop_adder_thursday_switch)
+        val fri_switch=findViewById<Switch>(R.id.activity_shop_adder_friday_switch)
+        val sat_switch=findViewById<Switch>(R.id.activity_shop_adder_saturday_switch)
+        val sun_switch=findViewById<Switch>(R.id.activity_shop_adder_sunday_switch)
 
-        shop_name.animation = bottomAnim
+
+
+        timings.put("Monday", arrayListOf("NA","NA"))
+        timings.put("Tuesday",arrayListOf("NA","NA"))
+        timings.put("Wednesday",arrayListOf("NA","NA"))
+        timings.put("Thursday",arrayListOf("NA","NA"))
+        timings.put("Friday",arrayListOf("NA","NA"))
+        timings.put("Saturday",arrayListOf("NA","NA"))
+        timings.put("Sunday",arrayListOf("NA","NA"))
+
+        mon_switch.setOnClickListener {
+            val layout=findViewById<View>(R.id.constraintLayoutMonday)
+            val switch=findViewById<Switch>(R.id.activity_shop_adder_monday_switch)
+            val from=findViewById<TextView>(R.id.activity_shop_adder_monday_from)
+            val to=findViewById<TextView>(R.id.activity_shop_adder_monday_to)
+            timetopick(layout,switch,from,to,"Monday")
+
+        }
+        tues_switch.setOnClickListener {
+            val layout=findViewById<View>(R.id.constraintLayoutTuesday)
+            val switch=findViewById<Switch>(R.id.activity_shop_adder_tuesday_switch)
+            val from=findViewById<TextView>(R.id.activity_shop_adder_tuesday_from)
+            val to=findViewById<TextView>(R.id.activity_shop_adder_tuesday_to)
+            timetopick(layout,switch,from,to,"Tuesday")
+
+        }
+        wednes_switch.setOnClickListener {
+            val layout=findViewById<View>(R.id.constraintLayoutWednesday)
+            val switch=findViewById<Switch>(R.id.activity_shop_adder_wednesday_switch)
+            val from=findViewById<TextView>(R.id.activity_shop_adder_wednesday_from)
+            val to=findViewById<TextView>(R.id.activity_shop_adder_wednesday_to)
+            timetopick(layout,switch,from,to,"Wednesday")
+
+        }
+        thur_switch.setOnClickListener {
+            val layout=findViewById<View>(R.id.constraintLayoutThursday)
+            val switch=findViewById<Switch>(R.id.activity_shop_adder_thursday_switch)
+            val from=findViewById<TextView>(R.id.activity_shop_adder_thursday_from)
+            val to=findViewById<TextView>(R.id.activity_shop_adder_thursday_to)
+            timetopick(layout,switch,from,to,"Thursday")
+
+        }
+        fri_switch.setOnClickListener {
+            val layout=findViewById<View>(R.id.constraintLayoutFriday)
+
+            val switch=findViewById<Switch>(R.id.activity_shop_adder_friday_switch)
+            val from=findViewById<TextView>(R.id.activity_shop_adder_friday_from)
+            val to=findViewById<TextView>(R.id.activity_shop_adder_friday_to)
+            timetopick(layout,switch,from,to,"Friday")
+
+        }
+        sat_switch.setOnClickListener {
+            val layout=findViewById<View>(R.id.constraintLayoutSaturday)
+            val switch=findViewById<Switch>(R.id.activity_shop_adder_saturday_switch)
+            val from=findViewById<TextView>(R.id.activity_shop_adder_saturday_from)
+            val to=findViewById<TextView>(R.id.activity_shop_adder_saturday_to)
+            timetopick(layout,switch,from,to,"Saturday")
+
+        }
+        sun_switch.setOnClickListener {
+            val layout=findViewById<View>(R.id.constraintLayoutSunday)
+            val switch=findViewById<Switch>(R.id.activity_shop_adder_sunday_switch)
+            val from=findViewById<TextView>(R.id.activity_shop_adder_sunday_from)
+            val to=findViewById<TextView>(R.id.activity_shop_adder_sunday_to)
+            timetopick(layout,switch,from,to,"Sunday")
+
+        }
+
+
+            shop_name.animation = bottomAnim
         address.animation = bottomAnim
         google_map_link.animation = bottomAnim
         city.animation = bottomAnim
@@ -58,10 +132,6 @@ class ShopAdderActivity : AppCompatActivity() {
             selectimage()
         }
 
-
-
-
-
         save_button.setOnClickListener {
             val name_shop = shop_name.text.toString()
             val address_shop = address.text.toString()
@@ -69,6 +139,7 @@ class ShopAdderActivity : AppCompatActivity() {
             val google_map_link_shop = google_map_link.text.toString()
             val user = auth.currentUser
             val uid = user!!.uid
+
 
             if (name_shop.isEmpty()) {
                 Toast.makeText(this, "Name is empty", Toast.LENGTH_SHORT).show()
@@ -88,9 +159,11 @@ class ShopAdderActivity : AppCompatActivity() {
                     address_shop,
                     city_shop,
                     google_map_link_shop,
-                    array
+                    array,
+                    timings
 
                 )
+
                 ref.setValue(shop).addOnSuccessListener {
                     val ref2 = FirebaseDatabase.getInstance()
                         .getReference("/barber/$uid/shopDetailsUploaded")
@@ -126,6 +199,52 @@ class ShopAdderActivity : AppCompatActivity() {
         intent.action=Intent.ACTION_GET_CONTENT
         startActivityForResult(intent,100)
     }
+
+    private fun timetopick(layout : View,switch : Switch,fromText: TextView,toText : TextView,day: String){
+        if(switch.isChecked){
+            layout.visibility=View.VISIBLE
+        }else layout.visibility= View.GONE
+
+
+
+        var from = ""
+        var to=""
+    fromText.setOnClickListener(){
+        val cal=Calendar.getInstance()
+        val timeSetListener =TimePickerDialog.OnTimeSetListener{timePicker,hour,minute ->
+             cal.set(Calendar.HOUR_OF_DAY,hour)
+            cal.set(Calendar.MINUTE,minute)
+
+            from=SimpleDateFormat("HH:mm").format(cal.time).toString()
+            fromText.text=from
+            Log.d(TAG,from)
+            timings[day]= arrayListOf(from,to)
+
+        }
+        TimePickerDialog(this,timeSetListener,cal.get(Calendar.HOUR_OF_DAY),cal.get(Calendar.MINUTE),true).show()
+    }
+        toText.setOnClickListener(){
+            val cal=Calendar.getInstance()
+            val timeSetListener =TimePickerDialog.OnTimeSetListener{timePicker,hour,minute ->
+                cal.set(Calendar.HOUR_OF_DAY,hour)
+                cal.set(Calendar.MINUTE,minute)
+
+                to=(SimpleDateFormat("HH:mm").format(cal.time).toString())
+                toText.text=to
+                Log.d(TAG,to)
+                timings[day]= arrayListOf(from,to)
+
+            }
+            TimePickerDialog(this,timeSetListener,cal.get(Calendar.HOUR_OF_DAY),cal.get(Calendar.MINUTE),true).show()
+        }
+
+
+
+
+
+
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

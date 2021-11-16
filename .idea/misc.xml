@@ -3,9 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/drawable-mdpi/search_view_background.xml" value="0.2546875" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/drawable-v24/about_icon.xml" value="0.2546875" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/drawable-v24/button_back_green.xml" value="0.1" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/drawable-v24/button_border.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/drawable-v24/ic_baseline_home_24.xml" value="0.2546875" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/drawable-xhdpi/round_edges_back_with_back_col.xml" value="0.27395833333333336" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/drawable/add_back_non_empty.xml" value="0.2546875" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/drawable/button_bg_minimal.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/drawable/circle_background.xml" value="0.2546875" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/drawable/confirmed_back_ground.xml" value="0.2546875" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.26974358974358975" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/drawable/ic_launcher_background.xml" value="0.26974358974358975" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/drawable/ic_wallet_background.xml" value="0.26974358974358975" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/drawable/light_green_add_money.xml" value="0.26974358974358975" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/drawable/light_red_withdraw_background.xml" value="0.26974358974358975" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/drawable/textview_back.xml" value="0.26974358974358975" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/activity_add_sent_otp.xml" value="0.13229166666666667" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/activity_loading.xml" value="0.10400000000000001" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/activity_login.xml" value="0.13020833333333334" />
@@ -14,7 +27,7 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/activity_search.xml" value="0.11875" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/activity_service_adder.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/activity_service_saving_completion.xml" value="0.13020833333333334" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/activity_shop_adder.xml" value="0.176" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/activity_shop_adder.xml" value="0.4038800705467372" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/activity_wallet_add_withdraw.xml" value="0.11875" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/confirmed_appointment_list.xml" value="0.2" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app_barber_version/app/src/main/res/layout/fragment_home.xml" value="0.23333333333333334" />
@@ -49,7 +62,6 @@
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/activity_login.xml" value="0.20520833333333333" />
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/activity_service_adder.xml" value="0.34375" />
-        <entry key="..\:/bloomerBarber/app/src/main/res/layout/activity_service_modify_delete.xml" value="0.29362880886426596" />
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/activity_service_saving_completion.xml" value="0.36666666666666664" />
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/activity_shop_adder.xml" value="0.3333333333333333" />
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/activity_wallet_activity.xml" value="0.2347560975609756" />
@@ -62,9 +74,9 @@
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/fragment_services_manager.xml" value="0.1" />
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/icoming_appointment_request_layout.xml" value="0.1" />
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/incoming_appointment_request_layout.xml" value="0.34285714285714286" />
-        <entry key="..\:/bloomerBarber/app/src/main/res/layout/pending_appointment_list.xml" value="0.3081395348837209" />
+        <entry key="..\:/bloomerBarber/app/src/main/res/layout/pending_appointment_list.xml" value="0.336" />
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/prev_tans_wallet_list.xml" value="0.22" />
-        <entry key="..\:/bloomerBarber/app/src/main/res/layout/service_list.xml" value="0.2789473684210526" />
+        <entry key="..\:/bloomerBarber/app/src/main/res/layout/service_list.xml" value="0.36666666666666664" />
         <entry key="..\:/bloomerBarber/app/src/main/res/layout/service_viewing_list.xml" value="0.1" />
       </map>
     </option>
