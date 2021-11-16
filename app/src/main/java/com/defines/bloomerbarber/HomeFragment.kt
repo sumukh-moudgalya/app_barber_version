@@ -58,6 +58,8 @@ class HomeFragment : Fragment() {
         fetchlocation(myfrag)
         fetchlocation(myfrag)
         fetchPendingOrders(this,pendingRecyclerView)
+        checkForcompletedOrders(activity)
+
         val profile_pic_view: ImageView = myfrag.findViewById(R.id.fragment_home_profile_pic)
         val wallet_nav: ImageView = myfrag.findViewById(R.id.fragment_home_wallet_nav_button)
         val user = FirebaseAuth.getInstance().currentUser
@@ -76,6 +78,57 @@ class HomeFragment : Fragment() {
         }
         // Inflate the layout for this fragment
         return myfrag
+    }
+    private fun checkForcompletedOrders(activity: FragmentActivity?) {
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+        val ref = FirebaseDatabase.getInstance().getReference("barber_orders/$uid/confirmed")
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach {
+                    val bookingElement=it.getValue(BookingElement::class.java)
+                    if(bookingElement!=null){
+                        val hour = bookingElement.timeSlot.subSequence(0, 2).toString()
+                        var minute = bookingElement.timeSlot.subSequence(2, 4).toString()
+
+                        val date=bookingElement.date
+                        val time=hour+":"+minute
+                        val timeSlot=date +" "+time
+                        val dateFormatter= SimpleDateFormat("MM/dd/yyyy hh:mm")
+                        val timeSlotTimeRaw=dateFormatter.parse(timeSlot)
+                        Log.d(TAG,"Time=${timeSlotTimeRaw.getTime()/1000} date=$timeSlot")
+                        val timeSlotTimeStamp=timeSlotTimeRaw.getTime()/1000
+                        val completeTimeStamp=timeSlotTimeStamp+(bookingElement.total_time*60)+(10*60)
+                        val currentTime=System.currentTimeMillis()/1000
+                        Log.d(TAG,"currTime====$currentTime")
+                        if(currentTime>=completeTimeStamp){
+                            ref.child("${bookingElement.timeStamp}").removeValue().addOnSuccessListener {
+                                val refUserPending=FirebaseDatabase.getInstance().getReference("users_orders/${bookingElement.user_uid}/confirmed/${bookingElement.timeStamp}")
+                                refUserPending.removeValue()
+                                bookingElement.orderStatus="completed"
+                                val refCompletedBarber=FirebaseDatabase.getInstance().getReference("barber_orders/$uid/completed/{${bookingElement.timeStamp}")
+                                refCompletedBarber.setValue(bookingElement).addOnSuccessListener {
+                                    Log.d(TAG,"refCompletedBarber has been updated")
+                                    val refUserCompleted=FirebaseDatabase.getInstance().getReference("users_orders/${bookingElement.user_uid}/completed/${bookingElement.timeStamp}")
+                                    refUserCompleted.setValue(bookingElement).addOnSuccessListener {
+                                        Log.d(TAG,"refUserCompleted has been updated")
+                                    }
+                                }
+                            }
+
+
+                        }
+
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(activity, "Error in database", Toast.LENGTH_SHORT).show()
+
+            }
+
+        })
+
     }
 
     private fun fetchPendingOrders(myfrag: HomeFragment, pendingRecyclerView: RecyclerView) {

@@ -100,7 +100,6 @@ class MainActivity : AppCompatActivity() {
                             ref.child("${bookingElement.timeStamp}").removeValue().addOnSuccessListener {
                                 val refUserPending=FirebaseDatabase.getInstance().getReference("users_orders/${bookingElement.user_uid}/confirmed/${bookingElement.timeStamp}")
                                 refUserPending.removeValue()
-
                                 bookingElement.orderStatus="completed"
                                 val refCompletedBarber=FirebaseDatabase.getInstance().getReference("barber_orders/$uid/completed/{${bookingElement.timeStamp}")
                                 refCompletedBarber.setValue(bookingElement).addOnSuccessListener {
