@@ -39,34 +39,108 @@ class OrdersFragment : Fragment() {
             myFrag.findViewById(R.id.pending_confirmation_recycler_view)
         val confirmedRecyclerView: RecyclerView =
             myFrag.findViewById(R.id.fragment_orders_confirmed_order_recycler_view)
+        val emptyConfirmedText: TextView =
+            myFrag.findViewById(R.id.fragment_orders_confirmed_orders_empty_text)
+        val completedRecyclerView: RecyclerView =
+            myFrag.findViewById(R.id.fragment_orders_completed_orders_recycler_view)
+        val emptyRecyclerText: TextView =
+            myFrag.findViewById(R.id.fragment_orders_empty_confirmed_text)
+
+
+
+
         fetchPendingOrdersList(activity, pendingRecyclerView, emptyPendingListText)
-        fetchConfirmedOrders(activity, confirmedRecyclerView)
+        fetchConfirmedOrders(activity, confirmedRecyclerView, emptyConfirmedText)
+        fetchCompletedOrders(activity, completedRecyclerView, emptyRecyclerText)
         return myFrag
     }
 
-    private fun fetchConfirmedOrders(activity: FragmentActivity?, confirmedRecyclerView: RecyclerView) {
+    private fun fetchCompletedOrders(
+        activity: FragmentActivity?,
+        completedRecyclerView: RecyclerView,
+        emptyRecyclerText: TextView
+    ) {
         val uid = FirebaseAuth.getInstance().currentUser!!.uid
-        val ref = FirebaseDatabase.getInstance().getReference("barber_orders/$uid/confirmed/")
-        ref.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(p0: DataSnapshot) {
+        val completedPathCheck=FirebaseDatabase.getInstance().getReference("barber_orders/$uid/")
+        completedPathCheck.addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.hasChild("confirmed")){
+                    emptyRecyclerText.visibility = View.GONE
+                    val ref =
+                        FirebaseDatabase.getInstance().getReference("barber_orders/$uid/completed/")
+                    ref.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(p0: DataSnapshot) {
 
-                val adapter = GroupAdapter<GroupieViewHolder>()
-                p0.children.forEach {
-                    val bookingElement = it.getValue(BookingElement::class.java)
-                    if (bookingElement != null) {
-                        adapter.add(ConfirmedAppointmentAdder(bookingElement, activity))
-                    }
+                            val adapter = GroupAdapter<GroupieViewHolder>()
+                            p0.children.forEach {
+                                val bookingElement = it.getValue(BookingElement::class.java)
+                                if (bookingElement != null) {
+                                    adapter.add(ConfirmedAppointmentAdder(bookingElement, activity))
+                                }
+
+                            }
+                            completedRecyclerView.adapter = adapter
+
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show()
+                        }
+
+                    })
 
                 }
-                confirmedRecyclerView.adapter=adapter
-
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show()
+
             }
 
         })
+    }
+
+    private fun fetchConfirmedOrders(
+        activity: FragmentActivity?,
+        confirmedRecyclerView: RecyclerView,
+        emptyConfirmedText: TextView
+    ) {
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+        val confirmedPathCheck = FirebaseDatabase.getInstance().getReference("barber_orders/$uid/")
+        confirmedPathCheck.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.hasChild("confirmed")) {
+                    emptyConfirmedText.visibility = View.GONE
+                    val ref =
+                        FirebaseDatabase.getInstance().getReference("barber_orders/$uid/confirmed/")
+                    ref.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(p0: DataSnapshot) {
+
+                            val adapter = GroupAdapter<GroupieViewHolder>()
+                            p0.children.forEach {
+                                val bookingElement = it.getValue(BookingElement::class.java)
+                                if (bookingElement != null) {
+                                    adapter.add(ConfirmedAppointmentAdder(bookingElement, activity))
+                                }
+
+                            }
+                            confirmedRecyclerView.adapter = adapter
+
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show()
+                        }
+
+                    })
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
+
     }
 
     private fun fetchPendingOrdersList(
@@ -128,7 +202,58 @@ class OrdersFragment : Fragment() {
                 arguments = Bundle().apply {}
             }
     }
+    class CompletedAppointmentAdder(
+        val bookingElement: BookingElement,
+        var activity: FragmentActivity?
+    ):Item<GroupieViewHolder>(){
+        override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+            val serviceName = bookingElement.order_selected[0].name
+            val cost = bookingElement.total_cost
+            val time = bookingElement.total_time
+            val monthMap = mapOf(
+                1 to "January",
+                2 to "February",
+                3 to "March",
+                4 to "April",
+                5 to "May",
+                6 to "June",
+                7 to "July",
+                8 to "August",
+                9 to "September",
+                10 to "October",
+                11 to "November",
+                12 to "December"
+            )
+            val array_date = bookingElement.date.split("/").toTypedArray()
+            val month = array_date[0]
+            val day = array_date[1]
+            val year = array_date[2]
 
+            viewHolder.itemView.confirmed_appointment_service_name.text = serviceName
+            viewHolder.itemView.confirmed_appointment_list_cost.text = "₹" + cost.toString()
+            viewHolder.itemView.confirmed_appointment_total_time.text = time.toString() + "mins"
+            viewHolder.itemView.confirmed_appointment_month_text.text = monthMap[month.toInt()]
+            viewHolder.itemView.confirmed_appointment_day.text = day
+            val hour = bookingElement.timeSlot.subSequence(0, 2).toString()
+            var minute = bookingElement.timeSlot.subSequence(2, 4).toString()
+            if (hour.toInt() >= 12) {
+                minute += " pm"
+            } else {
+                minute += " am"
+            }
+            viewHolder.itemView.confirmed_appointment_list_time_slot.text = hour + ":" + minute
+            viewHolder.itemView.confirmed_appointment_see_more_button.setOnClickListener {
+                val intent = Intent(activity, BookingAppointmentDetailsActivity::class.java)
+                intent.putExtra(MainActivity.BOOKING_ELEMENT_KEY, bookingElement as Serializable)
+                activity!!.startActivity(intent)
+            }
+        }
+
+        override fun getLayout(): Int {
+            return R.layout.completed_appointment_list
+        }
+
+    }
     class PendingAppointmentAdder(
         val bookingElement: BookingElement,
         var activity: FragmentActivity?

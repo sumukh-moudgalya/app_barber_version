@@ -52,6 +52,11 @@ class BookingAppointmentDetailsActivity : AppCompatActivity() {
             orderStatusText.text="Appointment Confirmed"
             orderStatusText.setTextColor(ContextCompat.getColor(this,R.color.white))
             orderStatusText.background=ContextCompat.getDrawable(this, R.drawable.confirmed_back_ground)
+        }else if(bookingElement.orderStatus=="completed"){
+            confirmCardView.visibility = View.GONE
+            orderStatusText.text="Appointment Completed"
+            orderStatusText.setTextColor(ContextCompat.getColor(this,R.color.white))
+            orderStatusText.background=ContextCompat.getDrawable(this, R.drawable.add_back_non_empty)
         }
 
         confirmAppointment.setOnClickListener{
