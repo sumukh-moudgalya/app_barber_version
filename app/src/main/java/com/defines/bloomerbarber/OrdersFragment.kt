@@ -18,7 +18,9 @@ import com.google.firebase.database.ValueEventListener
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
+import kotlinx.android.synthetic.main.completed_appointment_list.view.*
 import kotlinx.android.synthetic.main.confirmed_appointment_list.view.*
+import kotlinx.android.synthetic.main.confirmed_appointment_list.view.confirmed_appointment_service_name
 import kotlinx.android.synthetic.main.pending_appointment_list.view.*
 import java.io.Serializable
 
@@ -64,7 +66,7 @@ class OrdersFragment : Fragment() {
         val completedPathCheck=FirebaseDatabase.getInstance().getReference("barber_orders/$uid/")
         completedPathCheck.addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.hasChild("confirmed")){
+                if (snapshot.hasChild("completed")){
                     emptyRecyclerText.visibility = View.GONE
                     val ref =
                         FirebaseDatabase.getInstance().getReference("barber_orders/$uid/completed/")
@@ -75,7 +77,7 @@ class OrdersFragment : Fragment() {
                             p0.children.forEach {
                                 val bookingElement = it.getValue(BookingElement::class.java)
                                 if (bookingElement != null) {
-                                    adapter.add(ConfirmedAppointmentAdder(bookingElement, activity))
+                                    adapter.add(CompletedAppointmentAdder(bookingElement, activity))
                                 }
 
                             }
@@ -229,11 +231,11 @@ class OrdersFragment : Fragment() {
             val day = array_date[1]
             val year = array_date[2]
 
-            viewHolder.itemView.confirmed_appointment_service_name.text = serviceName
-            viewHolder.itemView.confirmed_appointment_list_cost.text = "₹" + cost.toString()
-            viewHolder.itemView.confirmed_appointment_total_time.text = time.toString() + "mins"
-            viewHolder.itemView.confirmed_appointment_month_text.text = monthMap[month.toInt()]
-            viewHolder.itemView.confirmed_appointment_day.text = day
+            viewHolder.itemView.completed_appointment_service_name.text = serviceName
+            viewHolder.itemView.completed_appointment_list_cost.text = "₹" + cost.toString()
+            viewHolder.itemView.completed_appointment_total_time.text = time.toString() + "mins"
+            viewHolder.itemView.completed_appointment_month_text.text = monthMap[month.toInt()]
+            viewHolder.itemView.completed_appointment_day.text = day
             val hour = bookingElement.timeSlot.subSequence(0, 2).toString()
             var minute = bookingElement.timeSlot.subSequence(2, 4).toString()
             if (hour.toInt() >= 12) {
@@ -241,8 +243,8 @@ class OrdersFragment : Fragment() {
             } else {
                 minute += " am"
             }
-            viewHolder.itemView.confirmed_appointment_list_time_slot.text = hour + ":" + minute
-            viewHolder.itemView.confirmed_appointment_see_more_button.setOnClickListener {
+            viewHolder.itemView.completed_appointment_list_time_slot.text = hour + ":" + minute
+            viewHolder.itemView.completed_appointment_see_more_button.setOnClickListener {
                 val intent = Intent(activity, BookingAppointmentDetailsActivity::class.java)
                 intent.putExtra(MainActivity.BOOKING_ELEMENT_KEY, bookingElement as Serializable)
                 activity!!.startActivity(intent)

@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -54,11 +55,15 @@ class HomeFragment : Fragment() {
             myfrag.findViewById(R.id.fragment_home_ongoing_order_recycler_view)
         val pendingRecyclerView: RecyclerView =
             myfrag.findViewById(R.id.fragment_home_pending_order_recycler_view)
+
+        val messageDisplayLinearLayout: LinearLayout =
+            myfrag.findViewById(R.id.fragment_home_linear_layout_inflater)
         fetchTodayAppointment(this, todayRecyclerView)
         fetchlocation(myfrag)
         fetchlocation(myfrag)
-        fetchPendingOrders(this,pendingRecyclerView)
+        fetchPendingOrders(this, pendingRecyclerView)
         checkForcompletedOrders(activity)
+        checkWalletBalance(activity, messageDisplayLinearLayout)
 
         val profile_pic_view: ImageView = myfrag.findViewById(R.id.fragment_home_profile_pic)
         val wallet_nav: ImageView = myfrag.findViewById(R.id.fragment_home_wallet_nav_button)
@@ -79,41 +84,99 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         return myfrag
     }
+
+    private fun checkWalletBalance(
+        activity: FragmentActivity?,
+        messageDisplayLinearLayout: LinearLayout
+    ) {
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+        val ref = FirebaseDatabase.getInstance().getReference("wallet_barber/$uid")
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val wallet = snapshot.getValue(Wallet::class.java)
+                if(wallet!!.balance<=5.0){
+                    val view: View =
+                        layoutInflater.inflate(R.layout.wallet_empty_layout, null)
+                    val walletBalance:TextView=view.findViewById(R.id.wallet_empty_layout_wallet_balance)
+                    walletBalance.text="Balance :"+wallet.balance.toString()
+                    val navToAddMoney:TextView=view.findViewById(R.id.wallet_empty_layout_wallet_add_nav_button)
+                    navToAddMoney.setOnClickListener{
+                        val intent = Intent(activity,WalletAddWithdrawActivity::class.java)
+                        intent.putExtra(BarberWalletActivity.WALLET_TRANS_TYPE, "ADD")
+                        startActivity(intent)
+                    }
+                    messageDisplayLinearLayout.addView(view)
+                }
+                else if (wallet!!.balance>5.0 && wallet!!.balance <= 10) {
+                    val view: View =
+                        layoutInflater.inflate(R.layout.wallet_balance_inflater_layout, null)
+                    val walletBalance: TextView =
+                        view.findViewById(R.id.wallet_balance_inflater_layout_wallet_balance)
+                    walletBalance.text=wallet.balance.toString()
+                    val navToAddMoney:TextView=view.findViewById(R.id.wallet_balance_inflater_layout_wallet_add_nav_button)
+                    navToAddMoney.setOnClickListener{
+                        val intent = Intent(activity,WalletAddWithdrawActivity::class.java)
+                        intent.putExtra(BarberWalletActivity.WALLET_TRANS_TYPE, "ADD")
+                        startActivity(intent)
+                    }
+                    messageDisplayLinearLayout.addView(view)
+
+
+
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(activity, "Database error", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
+
+    }
+
     private fun checkForcompletedOrders(activity: FragmentActivity?) {
         val uid = FirebaseAuth.getInstance().currentUser!!.uid
         val ref = FirebaseDatabase.getInstance().getReference("barber_orders/$uid/confirmed")
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 snapshot.children.forEach {
-                    val bookingElement=it.getValue(BookingElement::class.java)
-                    if(bookingElement!=null){
+                    val bookingElement = it.getValue(BookingElement::class.java)
+                    if (bookingElement != null) {
                         val hour = bookingElement.timeSlot.subSequence(0, 2).toString()
                         var minute = bookingElement.timeSlot.subSequence(2, 4).toString()
 
-                        val date=bookingElement.date
-                        val time=hour+":"+minute
-                        val timeSlot=date +" "+time
-                        val dateFormatter= SimpleDateFormat("MM/dd/yyyy hh:mm")
-                        val timeSlotTimeRaw=dateFormatter.parse(timeSlot)
-                        Log.d(TAG,"Time=${timeSlotTimeRaw.getTime()/1000} date=$timeSlot")
-                        val timeSlotTimeStamp=timeSlotTimeRaw.getTime()/1000
-                        val completeTimeStamp=timeSlotTimeStamp+(bookingElement.total_time*60)+(10*60)
-                        val currentTime=System.currentTimeMillis()/1000
-                        Log.d(TAG,"currTime====$currentTime")
-                        if(currentTime>=completeTimeStamp){
-                            ref.child("${bookingElement.timeStamp}").removeValue().addOnSuccessListener {
-                                val refUserPending=FirebaseDatabase.getInstance().getReference("users_orders/${bookingElement.user_uid}/confirmed/${bookingElement.timeStamp}")
-                                refUserPending.removeValue()
-                                bookingElement.orderStatus="completed"
-                                val refCompletedBarber=FirebaseDatabase.getInstance().getReference("barber_orders/$uid/completed/{${bookingElement.timeStamp}")
-                                refCompletedBarber.setValue(bookingElement).addOnSuccessListener {
-                                    Log.d(TAG,"refCompletedBarber has been updated")
-                                    val refUserCompleted=FirebaseDatabase.getInstance().getReference("users_orders/${bookingElement.user_uid}/completed/${bookingElement.timeStamp}")
-                                    refUserCompleted.setValue(bookingElement).addOnSuccessListener {
-                                        Log.d(TAG,"refUserCompleted has been updated")
-                                    }
+                        val date = bookingElement.date
+                        val time = hour + ":" + minute
+                        val timeSlot = date + " " + time
+                        val dateFormatter = SimpleDateFormat("MM/dd/yyyy hh:mm")
+                        val timeSlotTimeRaw = dateFormatter.parse(timeSlot)
+                        Log.d(TAG, "Time=${timeSlotTimeRaw.getTime() / 1000} date=$timeSlot")
+                        val timeSlotTimeStamp = timeSlotTimeRaw.getTime() / 1000
+                        val completeTimeStamp =
+                            timeSlotTimeStamp + (bookingElement.total_time * 60) + (10 * 60)
+                        val currentTime = System.currentTimeMillis() / 1000
+                        Log.d(TAG, "currTime====$currentTime")
+                        if (currentTime >= completeTimeStamp) {
+                            ref.child("${bookingElement.timeStamp}").removeValue()
+                                .addOnSuccessListener {
+                                    val refUserPending = FirebaseDatabase.getInstance()
+                                        .getReference("users_orders/${bookingElement.user_uid}/confirmed/${bookingElement.timeStamp}")
+                                    refUserPending.removeValue()
+                                    bookingElement.orderStatus = "completed"
+                                    val refCompletedBarber = FirebaseDatabase.getInstance()
+                                        .getReference("barber_orders/$uid/completed/${bookingElement.timeStamp}")
+                                    refCompletedBarber.setValue(bookingElement)
+                                        .addOnSuccessListener {
+                                            Log.d(TAG, "refCompletedBarber has been updated")
+                                            val refUserCompleted = FirebaseDatabase.getInstance()
+                                                .getReference("users_orders/${bookingElement.user_uid}/completed/${bookingElement.timeStamp}")
+                                            refUserCompleted.setValue(bookingElement)
+                                                .addOnSuccessListener {
+                                                    Log.d(TAG, "refUserCompleted has been updated")
+                                                }
+                                        }
                                 }
-                            }
 
 
                         }
@@ -132,8 +195,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun fetchPendingOrders(myfrag: HomeFragment, pendingRecyclerView: RecyclerView) {
-        val uid=FirebaseAuth.getInstance().currentUser!!.uid
-        val ref=FirebaseDatabase.getInstance().getReference("barber_orders/$uid/pending_confirmation/")
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+        val ref =
+            FirebaseDatabase.getInstance().getReference("barber_orders/$uid/pending_confirmation/")
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
 
@@ -192,10 +256,11 @@ class HomeFragment : Fragment() {
         })
 
     }
+
     class PendingAppointmentAdder(
         var bookingElement: BookingElement,
         var activity: FragmentActivity?
-    ) : Item<GroupieViewHolder>(){
+    ) : Item<GroupieViewHolder>() {
         override fun bind(viewHolder: GroupieViewHolder, position: Int) {
             val serviceName = bookingElement.order_selected[0].name
             val cost = bookingElement.total_cost
@@ -244,6 +309,7 @@ class HomeFragment : Fragment() {
         }
 
     }
+
     class TodayAppointmentAdder(
         var bookingElement: BookingElement,
         var activity: FragmentActivity?
