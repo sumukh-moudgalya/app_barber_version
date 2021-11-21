@@ -273,7 +273,13 @@ class ShopAdderActivity : AppCompatActivity() {
                         storageReference.putFile(ImageUri)
                             .addOnSuccessListener {
 
-                                if (progressDialog.isShowing) progressDialog.dismiss()
+                                if (progressDialog.isShowing){
+                                    progressDialog.dismiss()
+
+                                }
+                                storageReference.downloadUrl.addOnSuccessListener {
+                                    array.add(it.toString())
+                                }
 
                             }
                             .addOnFailureListener {
@@ -284,7 +290,7 @@ class ShopAdderActivity : AppCompatActivity() {
 
                             }
 
-                        array.add(storageReference.downloadUrl.toString())
+
 
                     }
             }

@@ -35,6 +35,7 @@ var count: HashMap<String, Int> = HashMap<String, Int>()
 class BookingAppointmentDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        count=HashMap<String, Int>()
         setContentView(R.layout.activity_booking_appointment_details)
         supportActionBar?.hide()
         val bookingElement:BookingElement=intent.extras!!.getSerializable(BOOKING_ELEMENT_KEY) as BookingElement

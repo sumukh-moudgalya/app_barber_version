@@ -16,10 +16,10 @@ class BookingElement(
     val date: String,
     val timeSlot: String,
     val timeStamp: String,
-    var orderStatus: String
-
+    var orderStatus: String,
+    val isReviewed: Boolean
 
 ) : Parcelable,
     Serializable {
-    constructor() : this("", "", "", 0.0, 0.0, ArrayList<ServiceOffered>(), "", "", "","")
+    constructor() : this("", "", "", 0.0, 0.0, ArrayList<ServiceOffered>(), "", "", "", "", false)
 }
