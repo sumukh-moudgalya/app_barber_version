@@ -46,27 +46,36 @@ class MainActivity : AppCompatActivity() {
         checkForcompletedOrders(this)
 //        Connecting bottom navigation
         bottomNavigation = findViewById(R.id.bottom_navigation)
-        bottomNavigation.show(2)
+        bottomNavigation.show(3)
 
 //        Adding bottom navigation menu items
         bottomNavigation.add(MeowBottomNavigation.Model(1, R.drawable.menu))
-        bottomNavigation.add(MeowBottomNavigation.Model(2, R.drawable.ic_baseline_home_24))
-        bottomNavigation.add(MeowBottomNavigation.Model(3, R.drawable.orders))
+        bottomNavigation.add(MeowBottomNavigation.Model(2, R.drawable.analytics_icon))
+        bottomNavigation.add(MeowBottomNavigation.Model(3, R.drawable.ic_baseline_home_24))
+        bottomNavigation.add(MeowBottomNavigation.Model(4, R.drawable.orders))
+        bottomNavigation.add(MeowBottomNavigation.Model(5, R.drawable.settings_icon))
+
 
 
         bottomNavigation.setOnShowListener {
             when (it.id) {
-                3 -> {
+                4 -> {
 
                     replaceFragment(OrdersFragment.newInstance(), true)
                 }
-                2 -> {
+                3 -> {
 
                     replaceFragment(HomeFragment.newInstance(), true)
                 }
                 1 -> {
 
                     replaceFragment(ServicesManagerFragment.newInstance(), true)
+                }
+                2 -> {
+                    replaceFragment(ReviewFragment.newInstance(), true)
+                }
+                5 -> {
+                    replaceFragment(SettingsFragment.newInstance(),true)
                 }
 
             }
@@ -81,35 +90,42 @@ class MainActivity : AppCompatActivity() {
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 snapshot.children.forEach {
-                   val bookingElement=it.getValue(BookingElement::class.java)
-                    if(bookingElement!=null){
+                    val bookingElement = it.getValue(BookingElement::class.java)
+                    if (bookingElement != null) {
                         val hour = bookingElement.timeSlot.subSequence(0, 2).toString()
                         var minute = bookingElement.timeSlot.subSequence(2, 4).toString()
 
-                        val date=bookingElement.date
-                        val time=hour+":"+minute
-                        val timeSlot=date +" "+time
-                        val dateFormatter= SimpleDateFormat("MM/dd/yyyy hh:mm")
-                        val timeSlotTimeRaw=dateFormatter.parse(timeSlot)
-                        Log.d(TAG,"Time=${timeSlotTimeRaw.getTime()/1000} date=$timeSlot")
-                        val timeSlotTimeStamp=timeSlotTimeRaw.getTime()/1000
-                        val completeTimeStamp=timeSlotTimeStamp+(bookingElement.total_time*60)+(10*60)
-                        val currentTime=System.currentTimeMillis()/1000
-                        Log.d(TAG,"currTime====$currentTime")
-                        if(currentTime>=completeTimeStamp){
-                            ref.child("${bookingElement.timeStamp}").removeValue().addOnSuccessListener {
-                                val refUserPending=FirebaseDatabase.getInstance().getReference("users_orders/${bookingElement.user_uid}/confirmed/${bookingElement.timeStamp}")
-                                refUserPending.removeValue()
-                                bookingElement.orderStatus="completed"
-                                val refCompletedBarber=FirebaseDatabase.getInstance().getReference("barber_orders/$uid/completed/{${bookingElement.timeStamp}")
-                                refCompletedBarber.setValue(bookingElement).addOnSuccessListener {
-                                    Log.d(TAG,"refCompletedBarber has been updated")
-                                    val refUserCompleted=FirebaseDatabase.getInstance().getReference("users_orders/${bookingElement.user_uid}/completed/${bookingElement.timeStamp}")
-                                    refUserCompleted.setValue(bookingElement).addOnSuccessListener {
-                                        Log.d(TAG,"refUserCompleted has been updated")
-                                    }
+                        val date = bookingElement.date
+                        val time = hour + ":" + minute
+                        val timeSlot = date + " " + time
+                        val dateFormatter = SimpleDateFormat("MM/dd/yyyy hh:mm")
+                        val timeSlotTimeRaw = dateFormatter.parse(timeSlot)
+                        Log.d(TAG, "Time=${timeSlotTimeRaw.getTime() / 1000} date=$timeSlot")
+                        val timeSlotTimeStamp = timeSlotTimeRaw.getTime() / 1000
+                        val completeTimeStamp =
+                            timeSlotTimeStamp + (bookingElement.total_time * 60) + (10 * 60)
+                        val currentTime = System.currentTimeMillis() / 1000
+                        Log.d(TAG, "currTime====$currentTime")
+                        if (currentTime >= completeTimeStamp) {
+                            ref.child("${bookingElement.timeStamp}").removeValue()
+                                .addOnSuccessListener {
+                                    val refUserPending = FirebaseDatabase.getInstance()
+                                        .getReference("users_orders/${bookingElement.user_uid}/confirmed/${bookingElement.timeStamp}")
+                                    refUserPending.removeValue()
+                                    bookingElement.orderStatus = "completed"
+                                    val refCompletedBarber = FirebaseDatabase.getInstance()
+                                        .getReference("barber_orders/$uid/completed/{${bookingElement.timeStamp}")
+                                    refCompletedBarber.setValue(bookingElement)
+                                        .addOnSuccessListener {
+                                            Log.d(TAG, "refCompletedBarber has been updated")
+                                            val refUserCompleted = FirebaseDatabase.getInstance()
+                                                .getReference("users_orders/${bookingElement.user_uid}/completed/${bookingElement.timeStamp}")
+                                            refUserCompleted.setValue(bookingElement)
+                                                .addOnSuccessListener {
+                                                    Log.d(TAG, "refUserCompleted has been updated")
+                                                }
+                                        }
                                 }
-                            }
 
 
                         }
