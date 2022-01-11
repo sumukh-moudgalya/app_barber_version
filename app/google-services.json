@@ -15,7 +15,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "1027298884319-ms19fv47qd0rcq2dd9treomku12f5rnn.apps.googleusercontent.com",
+          "client_id": "1027298884319-d2e4if8vevrkaea1bqavnhtoe90409ec.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.defines.bloomer",
+            "certificate_hash": "adc424767376bd73ef87a328be80ceb1147fe322"
+          }
+        },
+        {
+          "client_id": "1027298884319-ummcf09cl0u875rhn1ulntjl9n7ba5ji.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.defines.bloomer",
@@ -52,7 +60,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "1027298884319-89i87cn767j7i6nkirad248jtvf7f6q4.apps.googleusercontent.com",
+          "client_id": "1027298884319-gt0ig27r8u2100b96d2d4eka4im6hbd9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.defines.bloomerbarber",
+            "certificate_hash": "adc424767376bd73ef87a328be80ceb1147fe322"
+          }
+        },
+        {
+          "client_id": "1027298884319-suo1dta5ransi06itosfoaopje7d2qj3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.defines.bloomerbarber",
