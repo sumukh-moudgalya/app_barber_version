@@ -11,6 +11,11 @@
     <string name="get_otp">get otp</string>
     <string name="enter_otp">Enter OTP</string>
     <string name="confirm_otp">Confirm OTP</string>
+    <string name="hair_styling">Hair Styling</string>
+    <string name="body_grooming">Body Grooming</string>
+    <string name="hair_colouring">Hair Colouring</string>
+    <string name="make_and_transformation">Make And Transformation</string>
+    <string name="spa_and_recreation">Spa And Recreation</string>
 
     <string-array name="search_hints" font="@font/aclonica">
         <item>Search by saloon names</item>

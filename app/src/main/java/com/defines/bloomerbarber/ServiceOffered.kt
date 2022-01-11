@@ -10,7 +10,8 @@ class ServiceOffered(
     val cost: Double,
     val avgTime: Int,
     val description: String,
-    val timeStamp:String
+    val timeStamp:String,
+    val categories: HashMap<String,Boolean>
 ) : Parcelable, Serializable {
-    constructor() : this("NULL", 0.0, 0, "NULL","")
+    constructor() : this("NULL", 0.0, 0, "NULL","", hashMapOf<String,Boolean>())
 }

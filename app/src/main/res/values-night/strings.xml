@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hair_styling">Hair Styling</string>
+    <string name="body_grooming">Body Grooming</string>
+    <string name="hair_colouring">Hair Colouring</string>
+    <string name="make_and_transformation">Make And Transformation</string>
+    <string name="spa_and_recreation">Spa And Recreation</string>
+</resources>
