@@ -38,21 +38,21 @@ class ServiceModifyDeleteActivity : AppCompatActivity() {
         makeup.isChecked = service.categories["Makeup And Transformation"]==false
         spa.isChecked = service.categories["Spa And Recreation"]==false
 
-        hair_styling.setOnClickListener {
+
             categories["Hair Styling"] = hair_styling.isChecked
-        }
-        body_grooming.setOnClickListener {
+
+
             categories["Body Grooming"] = body_grooming.isChecked
-        }
-        hair_colouring.setOnClickListener {
+
+
             categories["Hair Colouring"] = hair_colouring.isChecked
-        }
-        makeup.setOnClickListener {
+
+
             categories["Makeup And Transformation"] = makeup.isChecked
-        }
-        spa.setOnClickListener {
+
+
             categories["Spa And Recreation"] = spa.isChecked
-        }
+
         val deleteButton:TextView=findViewById(R.id.activity_service_modify_delete_del_button)
         val modifyButton:TextView=findViewById(R.id.activity_service_modify_delete_modify_button)
         deleteButton.setOnClickListener{

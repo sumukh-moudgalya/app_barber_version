@@ -44,21 +44,21 @@ class ServiceAdderActivity : AppCompatActivity() {
             categories["Hair Colouring"]=false
             categories["Makeup And Transformation"]=false
             categories["Spa And Recreation"]=false
-            hair_styling.setOnClickListener {
+
                 categories["Hair Styling"] = hair_styling.isChecked
-            }
-            body_grooming.setOnClickListener {
+
+
                 categories["Body Grooming"] = body_grooming.isChecked
-            }
-            hair_colouring.setOnClickListener {
+
+
                 categories["Hair Colouring"] = hair_colouring.isChecked
-            }
-            makeup.setOnClickListener {
+
+
                 categories["Makeup And Transformation"] = makeup.isChecked
-            }
-            spa.setOnClickListener {
+
+
                 categories["Spa And Recreation"] = spa.isChecked
-            }
+
 
             ref=FirebaseDatabase.getInstance().getReference("services/$uid/$timeStamp")
             if (service_name.length()==0){
