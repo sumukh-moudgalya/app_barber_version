@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -23,6 +24,12 @@ class ServiceAdderActivity : AppCompatActivity() {
         val average_time:EditText=findViewById(R.id.activity_service_adder_average_time)
         val description:EditText=findViewById(R.id.activity_service_adder_description)
         val save_service_button: TextView =findViewById(R.id.activity_service_adder_save_button)
+        val hair_styling : CheckBox=findViewById(R.id.activity_service_adder_category_hair_styling)
+        val body_grooming : CheckBox=findViewById(R.id.activity_service_adder_category_body_grooming)
+        val hair_colouring : CheckBox=findViewById(R.id.activity_service_adder_category_hair_colouring)
+        val makeup : CheckBox=findViewById(R.id.activity_service_adder_category_make_and_transformation)
+        val spa : CheckBox=findViewById(R.id.activity_service_adder_category_spa_and_recreation)
+
         auth= Firebase.auth
 
         save_service_button.setOnClickListener{
@@ -31,7 +38,29 @@ class ServiceAdderActivity : AppCompatActivity() {
             val timeStamp=(System.currentTimeMillis()/1000).toString()
             var ref=FirebaseDatabase.getInstance().getReference("services/$uid")
 
-             ref=FirebaseDatabase.getInstance().getReference("services/$uid/$timeStamp")
+            val categories= hashMapOf<String,Boolean>()
+            categories["Hair Styling"]=false
+            categories["Body Grooming"]=false
+            categories["Hair Colouring"]=false
+            categories["Makeup And Transformation"]=false
+            categories["Spa And Recreation"]=false
+            hair_styling.setOnClickListener {
+                categories["Hair Styling"] = hair_styling.isChecked
+            }
+            body_grooming.setOnClickListener {
+                categories["Body Grooming"] = body_grooming.isChecked
+            }
+            hair_colouring.setOnClickListener {
+                categories["Hair Colouring"] = hair_colouring.isChecked
+            }
+            makeup.setOnClickListener {
+                categories["Makeup And Transformation"] = makeup.isChecked
+            }
+            spa.setOnClickListener {
+                categories["Spa And Recreation"] = spa.isChecked
+            }
+
+            ref=FirebaseDatabase.getInstance().getReference("services/$uid/$timeStamp")
             if (service_name.length()==0){
                 Toast.makeText(this,"service name is empty",Toast.LENGTH_SHORT).show()
             }else if (cost_service.length()==0){
@@ -40,6 +69,8 @@ class ServiceAdderActivity : AppCompatActivity() {
                 Toast.makeText(this,"average time is empty",Toast.LENGTH_SHORT).show()
             }else if(description.length()==0){
                 Toast.makeText(this,"Description is empty",Toast.LENGTH_SHORT).show()
+            }else if(!hair_styling.isChecked or !hair_colouring.isChecked or !spa.isChecked or !makeup.isChecked or !body_grooming.isChecked){
+                Toast.makeText(this,"Select Any one of the categories",Toast.LENGTH_SHORT).show()
             }
             val name=service_name.text.toString()
             var isCostInt=false
@@ -71,7 +102,8 @@ class ServiceAdderActivity : AppCompatActivity() {
                         cost,
                         time,
                         desc,
-                        timeStamp
+                        timeStamp,
+                        categories
                     )
 
                     ref.setValue(service_to_be_added).addOnSuccessListener {

@@ -81,7 +81,8 @@ class ServiceModifyDeleteActivity : AppCompatActivity() {
                         cost,
                         time,
                         desc,
-                        service.timeStamp
+                        service.timeStamp,
+                        hashMapOf()
                     )
 
                     ref.setValue(service_to_be_added).addOnSuccessListener {
