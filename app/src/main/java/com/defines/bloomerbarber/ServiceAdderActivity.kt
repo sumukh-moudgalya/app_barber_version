@@ -69,7 +69,7 @@ class ServiceAdderActivity : AppCompatActivity() {
                 Toast.makeText(this,"average time is empty",Toast.LENGTH_SHORT).show()
             }else if(description.length()==0){
                 Toast.makeText(this,"Description is empty",Toast.LENGTH_SHORT).show()
-            }else if(!hair_styling.isChecked or !hair_colouring.isChecked or !spa.isChecked or !makeup.isChecked or !body_grooming.isChecked){
+            }else if(!hair_styling.isChecked and !hair_colouring.isChecked and !spa.isChecked and !makeup.isChecked and !body_grooming.isChecked){
                 Toast.makeText(this,"Select Any one of the categories",Toast.LENGTH_SHORT).show()
             }
             val name=service_name.text.toString()
