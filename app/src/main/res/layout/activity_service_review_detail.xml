@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bar="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/background"
+    android:layout_height="match_parent"
+    tools:context=".ServiceReviewDetailActivity">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView13"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            bar:cardCornerRadius="8dp"
+            bar:layout_constraintBottom_toBottomOf="parent"
+            bar:layout_constraintEnd_toEndOf="parent"
+            bar:layout_constraintStart_toStartOf="parent"
+            bar:layout_constraintTop_toTopOf="parent"
+            bar:layout_constraintVertical_bias="0.0">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/activity_service_review_detail_back_button"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    bar:layout_constraintBottom_toBottomOf="parent"
+                    bar:layout_constraintEnd_toEndOf="parent"
+                    bar:layout_constraintHorizontal_bias="0.0"
+                    bar:layout_constraintStart_toStartOf="parent"
+                    bar:layout_constraintTop_toTopOf="parent"
+                    bar:layout_constraintVertical_bias="0.0"
+                    bar:srcCompat="@drawable/back_icon" />
+
+                <TextView
+                    android:id="@+id/activity_service_review_details_service_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="sans-serif"
+                    android:text="TextView"
+                    android:textColor="#000000"
+                    android:textColorLink="#000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    bar:layout_constraintBottom_toBottomOf="@+id/activity_service_review_detail_back_button"
+                    bar:layout_constraintEnd_toEndOf="parent"
+                    bar:layout_constraintHorizontal_bias="0.0"
+                    bar:layout_constraintStart_toEndOf="@+id/activity_service_review_detail_back_button"
+                    bar:layout_constraintTop_toTopOf="@+id/activity_service_review_detail_back_button" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            bar:cardCornerRadius="8dp"
+            bar:layout_constraintBottom_toBottomOf="parent"
+            bar:layout_constraintEnd_toEndOf="parent"
+            bar:layout_constraintStart_toStartOf="parent"
+            bar:layout_constraintTop_toBottomOf="@+id/cardView12">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/activity_service_review_detail_sorting_adder"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="horizontal"
+                    bar:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    bar:layout_constraintBottom_toBottomOf="parent"
+                    bar:layout_constraintEnd_toEndOf="parent"
+                    bar:layout_constraintStart_toStartOf="parent"
+                    bar:layout_constraintTop_toBottomOf="@+id/textView43"
+                    bar:layout_constraintVertical_bias="0.0" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/activity_service_review_detail_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="vertical"
+                    bar:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    bar:layout_constraintBottom_toBottomOf="parent"
+                    bar:layout_constraintEnd_toEndOf="parent"
+                    bar:layout_constraintStart_toStartOf="parent"
+                    bar:layout_constraintTop_toBottomOf="@+id/activity_service_review_detail_sorting_adder"
+                    bar:layout_constraintVertical_bias="0.89" />
+
+                <TextView
+                    android:id="@+id/textView43"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Customer Reviews"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    bar:layout_constraintBottom_toBottomOf="parent"
+                    bar:layout_constraintEnd_toEndOf="parent"
+                    bar:layout_constraintHorizontal_bias="0.0"
+                    bar:layout_constraintStart_toStartOf="parent"
+                    bar:layout_constraintTop_toTopOf="parent"
+                    bar:layout_constraintVertical_bias="0.0" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:elevation="10dp"
+            android:outlineSpotShadowColor="@color/white"
+            bar:cardCornerRadius="8dp"
+            bar:layout_constraintBottom_toBottomOf="parent"
+            bar:layout_constraintEnd_toEndOf="parent"
+            bar:layout_constraintStart_toStartOf="parent"
+            bar:layout_constraintTop_toBottomOf="@+id/cardView13"
+            bar:layout_constraintVertical_bias="0.0">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/activity_service_review_detail_number_of_reviews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center"
+                    android:text="TextView"
+                    android:textSize="16sp"
+                    bar:layout_constraintBottom_toBottomOf="parent"
+                    bar:layout_constraintEnd_toEndOf="@+id/ratingBar2"
+                    bar:layout_constraintStart_toStartOf="@+id/ratingBar2"
+                    bar:layout_constraintTop_toBottomOf="@+id/ratingBar2" />
+
+                <TextView
+                    android:id="@+id/activity_service_review_detail_avg_rating"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:background="?android:selectableItemBackground"
+                    android:fontFamily="@font/aclonica"
+                    android:text="4.7"
+                    android:textColor="#333333"
+                    android:textSize="36sp"
+                    android:textStyle="bold"
+                    bar:layout_constraintBottom_toBottomOf="parent"
+                    bar:layout_constraintEnd_toEndOf="@+id/ratingBar2"
+                    bar:layout_constraintHorizontal_bias="0.0"
+                    bar:layout_constraintStart_toStartOf="@+id/ratingBar2"
+                    bar:layout_constraintTop_toBottomOf="@+id/textView3"
+                    bar:layout_constraintVertical_bias="0.0" />
+
+                <RatingBar
+                    android:id="@+id/ratingBar2"
+                    style="@android:style/Widget.Material.Light.RatingBar.Small"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:backgroundTint="#0f9d58"
+                    android:numStars="5"
+                    android:progressTint="#0f9d58"
+                    android:rating="4"
+                    android:stepSize="1"
+                    bar:layout_constraintBottom_toBottomOf="parent"
+                    bar:layout_constraintEnd_toEndOf="parent"
+                    bar:layout_constraintHorizontal_bias="0.0"
+                    bar:layout_constraintStart_toStartOf="parent"
+                    bar:layout_constraintTop_toBottomOf="@+id/activity_service_review_detail_avg_rating"
+                    bar:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Ratings &amp; Reviews"
+                    android:textAppearance="@android:style/TextAppearance.Material.WindowTitle"
+                    android:textStyle="bold"
+                    bar:layout_constraintBottom_toBottomOf="parent"
+                    bar:layout_constraintEnd_toEndOf="parent"
+                    bar:layout_constraintHorizontal_bias="0.0"
+                    bar:layout_constraintStart_toStartOf="parent"
+                    bar:layout_constraintTop_toTopOf="parent"
+                    bar:layout_constraintVertical_bias="0.0" />
+
+
+                <com.taufiqrahman.reviewratings.RatingReviews
+                    android:id="@+id/rating_reviews_service_detail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    bar:animation="true"
+                    bar:layout_constraintBottom_toBottomOf="parent"
+                    bar:layout_constraintEnd_toEndOf="parent"
+                    bar:layout_constraintHorizontal_bias="0.51"
+                    bar:layout_constraintStart_toEndOf="@+id/activity_service_review_detail_avg_rating"
+                    bar:layout_constraintTop_toBottomOf="@+id/textView3"
+                    bar:layout_constraintVertical_bias="0.0"
+                    bar:rounded="true"
+                    bar:show_label="true"
+                    bar:spaces="8dp"
+                    bar:text_color="#333333"
+                    bar:text_size="10sp"
+                    bar:width="12dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

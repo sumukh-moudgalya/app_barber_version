@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(ServicesManagerFragment.newInstance(), true)
                 }
                 2 -> {
-                    replaceFragment(ReviewFragment.newInstance(), true)
+                    replaceFragment(ReviewNavigatorFragment.newInstance(), true)
                 }
                 5 -> {
                     replaceFragment(SettingsFragment.newInstance(),true)
