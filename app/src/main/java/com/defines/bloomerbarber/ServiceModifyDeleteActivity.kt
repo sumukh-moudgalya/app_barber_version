@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -20,11 +21,38 @@ class ServiceModifyDeleteActivity : AppCompatActivity() {
         val serviceTime:EditText=findViewById(R.id.activity_service_modify_delete_service_time)
         val serviceDescription:EditText=findViewById(R.id.activity_service_modify_delete_service_description)
 
+        val hair_styling : CheckBox =findViewById(R.id.activity_service_modify_category_hair_styling)
+        val body_grooming : CheckBox =findViewById(R.id.activity_service_modify_category_body_grooming)
+        val hair_colouring : CheckBox =findViewById(R.id.activity_service_modify_category_hair_colouring)
+        val makeup : CheckBox =findViewById(R.id.activity_service_modify_category_make_and_transformation)
+        val spa : CheckBox =findViewById(R.id.activity_service_modify_category_spa_and_recreation)
+
         serviceName.setText(service.name)
         serviceCost.setText(service.cost.toString())
         serviceTime.setText(service.avgTime.toString())
         serviceDescription.setText(service.description)
+        val categories= service.categories
+        hair_styling.isChecked = service.categories["Hair Styling"]==false
+        body_grooming.isChecked = service.categories["Body Grooming"]==false
+        hair_colouring.isChecked = service.categories["Hair Colouring"]==false
+        makeup.isChecked = service.categories["Makeup And Transformation"]==false
+        spa.isChecked = service.categories["Spa And Recreation"]==false
 
+        hair_styling.setOnClickListener {
+            categories["Hair Styling"] = hair_styling.isChecked
+        }
+        body_grooming.setOnClickListener {
+            categories["Body Grooming"] = body_grooming.isChecked
+        }
+        hair_colouring.setOnClickListener {
+            categories["Hair Colouring"] = hair_colouring.isChecked
+        }
+        makeup.setOnClickListener {
+            categories["Makeup And Transformation"] = makeup.isChecked
+        }
+        spa.setOnClickListener {
+            categories["Spa And Recreation"] = spa.isChecked
+        }
         val deleteButton:TextView=findViewById(R.id.activity_service_modify_delete_del_button)
         val modifyButton:TextView=findViewById(R.id.activity_service_modify_delete_modify_button)
         deleteButton.setOnClickListener{
@@ -50,6 +78,8 @@ class ServiceModifyDeleteActivity : AppCompatActivity() {
                 Toast.makeText(this,"average time is empty", Toast.LENGTH_SHORT).show()
             }else if(serviceDescription.length()==0){
                 Toast.makeText(this,"Description is empty", Toast.LENGTH_SHORT).show()
+            }else if(!hair_styling.isChecked or !hair_colouring.isChecked or !spa.isChecked or !makeup.isChecked or !body_grooming.isChecked){
+                Toast.makeText(this,"Select Any one of the categories",Toast.LENGTH_SHORT).show()
             }
             val name=serviceName.text.toString()
             var isCostInt=false
@@ -82,7 +112,7 @@ class ServiceModifyDeleteActivity : AppCompatActivity() {
                         time,
                         desc,
                         service.timeStamp,
-                        hashMapOf()
+                        categories
                     )
 
                     ref.setValue(service_to_be_added).addOnSuccessListener {
