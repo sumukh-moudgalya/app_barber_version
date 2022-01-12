@@ -14,9 +14,14 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
+import com.xwray.groupie.Item
+import kotlinx.android.synthetic.main.categories_list.view.*
 import java.lang.String.format
 import java.text.MessageFormat.format
 import java.util.*
@@ -29,7 +34,7 @@ class ShopAdderActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     var count=0
     var array=ArrayList<String>()
-
+    val categories=ArrayList<String>()
     val timings = HashMap<String, ArrayList<String>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -119,8 +124,29 @@ class ShopAdderActivity : AppCompatActivity() {
 
         }
 
+        val category_list=findViewById<RecyclerView>(R.id.activity_shop_adder_recyclerView)
 
-            shop_name.animation = bottomAnim
+
+        val adapter1= GroupAdapter<GroupieViewHolder>()
+        adapter1.add(categoryList("Hair Styling"))
+        adapter1.add(categoryList("Body Grooming"))
+        adapter1.add(categoryList("Hair Colouring"))
+        adapter1.add(categoryList("Makeup And Transformation"))
+        adapter1.add(categoryList("Spa And Recreation"))
+
+
+        adapter1.setOnItemClickListener { item, view ->
+
+
+            val it=item as categoryList
+            Log.d("Adapter clicked","adapter ${it.s} clicked")
+            if(view.category_checkbox.isChecked) categories.add(it.s)
+            else if(it.s in categories && !view.category_checkbox.isChecked) categories.remove(it.s)
+        }
+        category_list.adapter=adapter1
+
+
+        shop_name.animation = bottomAnim
         address.animation = bottomAnim
         google_map_link.animation = bottomAnim
         city.animation = bottomAnim
@@ -160,7 +186,8 @@ class ShopAdderActivity : AppCompatActivity() {
                     city_shop,
                     google_map_link_shop,
                     array,
-                    timings
+                    timings,
+                    categories
 
                 )
 
@@ -191,7 +218,23 @@ class ShopAdderActivity : AppCompatActivity() {
     }
 
 
+    class categoryList(val s: String) : Item<GroupieViewHolder>(){
+        override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+            viewHolder.itemView.category_checkbox.text=s
+            viewHolder.itemView.category_checkbox.setOnClickListener {
+                Log.d("Adapter clicked","adapter clicked")
+                viewHolder.itemView.constraint_category.performClick()
 
+            }
+
+
+        }
+
+        override fun getLayout(): Int {
+            return R.layout.categories_list
+        }
+
+    }
     private fun selectimage() {
         val intent= Intent()
         intent.type="image/*"

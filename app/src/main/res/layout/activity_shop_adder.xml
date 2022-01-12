@@ -147,9 +147,9 @@
                     android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.498"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout9" />
+                    app:layout_constraintTop_toBottomOf="@+id/activity_shop_adder_recyclerView"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
                     android:id="@+id/textView18"
@@ -232,15 +232,15 @@
                         app:layout_constraintVertical_bias="0.0">
 
                         <TextView
-                            android:padding="5dp"
-                            android:textSize="16sp"
-                            android:background="@drawable/round_edges_back_with_back_col"
-
                             android:id="@+id/activity_shop_adder_monday_from"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+
                             android:layout_marginStart="16dp"
+                            android:background="@drawable/round_edges_back_with_back_col"
                             android:hint="From"
+                            android:padding="5dp"
+                            android:textSize="16sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
@@ -263,13 +263,13 @@
                         <TextView
                             android:id="@+id/activity_shop_adder_monday_to"
                             android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="16dp"
+                            android:background="@drawable/round_edges_back_with_back_col"
                             android:hint="To"
                             android:padding="5dp"
-                            android:layout_height="match_parent"
                             android:textSize="16sp"
-                            android:background="@drawable/round_edges_back_with_back_col"
 
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -335,10 +335,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
+                            android:background="@drawable/round_edges_back_with_back_col"
                             android:hint="From"
                             android:padding="5dp"
                             android:textSize="16sp"
-                            android:background="@drawable/round_edges_back_with_back_col"
 
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -362,13 +362,13 @@
                         <TextView
                             android:id="@+id/activity_shop_adder_tuesday_to"
                             android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="16dp"
+                            android:background="@drawable/round_edges_back_with_back_col"
                             android:hint="To"
                             android:padding="5dp"
-                            android:layout_height="match_parent"
                             android:textSize="16sp"
-                            android:background="@drawable/round_edges_back_with_back_col"
 
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -434,10 +434,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
+                            android:background="@drawable/round_edges_back_with_back_col"
                             android:hint="From"
                             android:padding="5dp"
                             android:textSize="16sp"
-                            android:background="@drawable/round_edges_back_with_back_col"
 
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -461,13 +461,13 @@
                         <TextView
                             android:id="@+id/activity_shop_adder_wednesday_to"
                             android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="16dp"
+                            android:background="@drawable/round_edges_back_with_back_col"
                             android:hint="To"
                             android:padding="5dp"
-                            android:layout_height="match_parent"
                             android:textSize="16sp"
-                            android:background="@drawable/round_edges_back_with_back_col"
 
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -533,10 +533,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
+                            android:background="@drawable/round_edges_back_with_back_col"
                             android:hint="From"
                             android:padding="5dp"
                             android:textSize="16sp"
-                            android:background="@drawable/round_edges_back_with_back_col"
 
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -560,13 +560,13 @@
                         <TextView
                             android:id="@+id/activity_shop_adder_friday_to"
                             android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="16dp"
+                            android:background="@drawable/round_edges_back_with_back_col"
                             android:hint="To"
                             android:padding="5dp"
-                            android:layout_height="match_parent"
                             android:textSize="16sp"
-                            android:background="@drawable/round_edges_back_with_back_col"
 
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -632,10 +632,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
+                            android:background="@drawable/round_edges_back_with_back_col"
                             android:hint="From"
                             android:padding="5dp"
                             android:textSize="16sp"
-                            android:background="@drawable/round_edges_back_with_back_col"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
@@ -658,13 +658,13 @@
                         <TextView
                             android:id="@+id/activity_shop_adder_thursday_to"
                             android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="16dp"
+                            android:background="@drawable/round_edges_back_with_back_col"
                             android:hint="To"
                             android:padding="5dp"
-                            android:layout_height="match_parent"
                             android:textSize="16sp"
-                            android:background="@drawable/round_edges_back_with_back_col"
 
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -730,10 +730,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
+                            android:background="@drawable/round_edges_back_with_back_col"
                             android:hint="From"
                             android:padding="5dp"
                             android:textSize="16sp"
-                            android:background="@drawable/round_edges_back_with_back_col"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
@@ -756,13 +756,13 @@
                         <TextView
                             android:id="@+id/activity_shop_adder_saturday_to"
                             android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="16dp"
+                            android:background="@drawable/round_edges_back_with_back_col"
                             android:hint="To"
                             android:padding="5dp"
-                            android:layout_height="match_parent"
                             android:textSize="16sp"
-                            android:background="@drawable/round_edges_back_with_back_col"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/textView48"
@@ -825,12 +825,12 @@
 
                             android:id="@+id/activity_shop_adder_sunday_from"
                             android:layout_width="wrap_content"
-                            android:layout_marginStart="16dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
                             android:background="@drawable/round_edges_back_with_back_col"
+                            android:hint="From"
                             android:padding="5dp"
                             android:textSize="16sp"
-                            android:hint="From"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
@@ -854,13 +854,13 @@
 
                             android:id="@+id/activity_shop_adder_sunday_to"
                             android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="16dp"
-                            android:padding="5dp"
-                            android:layout_height="match_parent"
-                            android:textSize="16sp"
                             android:background="@drawable/round_edges_back_with_back_col"
                             android:hint="To"
+                            android:padding="5dp"
+                            android:textSize="16sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/textView49"
@@ -870,6 +870,38 @@
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:padding="6dp"
+                    android:text="Please Select the Categories to which
+service belongs"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout9" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/activity_shop_adder_recyclerView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="98dp"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

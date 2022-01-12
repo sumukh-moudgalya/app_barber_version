@@ -11,10 +11,11 @@ class Shop (
     val city:String,
     val google_map_link:String,
     val shop_images: ArrayList<String>,
-    val timings : HashMap<String, ArrayList<String>>
+    val timings : HashMap<String, ArrayList<String>>,
+    val categories : ArrayList<String>
 
 
         ):Parcelable,
 Serializable{
-    constructor():this("","","","","", ArrayList<String>(),HashMap<String,ArrayList<String>>())
+    constructor():this("","","","","", ArrayList<String>(),HashMap<String,ArrayList<String>>(),ArrayList<String>())
 }

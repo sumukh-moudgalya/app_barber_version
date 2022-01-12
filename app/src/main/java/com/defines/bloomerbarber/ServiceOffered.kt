@@ -3,6 +3,7 @@ package com.defines.bloomerbarber
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
+import java.util.ArrayList
 
 @Parcelize
 class ServiceOffered(
@@ -11,7 +12,7 @@ class ServiceOffered(
     val avgTime: Int,
     val description: String,
     val timeStamp:String,
-    val categories: HashMap<String,Boolean>
+    val categories: ArrayList<String>
 ) : Parcelable, Serializable {
-    constructor() : this("NULL", 0.0, 0, "NULL","", hashMapOf<String,Boolean>())
+    constructor() : this("NULL", 0.0, 0, "NULL","", ArrayList<String>())
 }
