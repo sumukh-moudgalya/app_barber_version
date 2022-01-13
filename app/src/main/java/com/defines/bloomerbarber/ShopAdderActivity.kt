@@ -16,7 +16,10 @@ import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -128,22 +131,45 @@ class ShopAdderActivity : AppCompatActivity() {
 
 
         val adapter1= GroupAdapter<GroupieViewHolder>()
-        adapter1.add(categoryList("Hair Styling"))
-        adapter1.add(categoryList("Body Grooming"))
-        adapter1.add(categoryList("Hair Colouring"))
-        adapter1.add(categoryList("Makeup And Transformation"))
-        adapter1.add(categoryList("Spa And Recreation"))
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+        val ref =
+            FirebaseDatabase.getInstance().getReference("/Categories_")
+        Log.d("Shop Adder Category", "fetch categories")
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot) {
 
 
-        adapter1.setOnItemClickListener { item, view ->
+                p0.children.forEach {
+                    Log.d("Shop Adder Category", "fetch categories${it.toString()}")
+                    val shop = it.getValue()
+                    adapter1.add(categoryList(shop.toString()))
+                    if (shop != null) {
+                        Log.d("PreviousTests", "${shop}")
+                    } else {
+                   }
 
 
-            val it=item as categoryList
-            Log.d("Adapter clicked","adapter ${it.s} clicked")
-            if(view.category_checkbox.isChecked) categories.add(it.s)
-            else if(it.s in categories && !view.category_checkbox.isChecked) categories.remove(it.s)
-        }
-        category_list.adapter=adapter1
+                }
+
+                adapter1.setOnItemClickListener { item, view ->
+
+
+                    val it=item as categoryList
+                    Log.d("Adapter clicked","adapter ${it.s} clicked")
+                    if(view.category_checkbox.isChecked) categories.add(it.s)
+                    else if(it.s in categories && !view.category_checkbox.isChecked) categories.remove(it.s)
+                }
+                category_list.adapter=adapter1
+
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+
+            }
+        })
+
 
 
         shop_name.animation = bottomAnim
