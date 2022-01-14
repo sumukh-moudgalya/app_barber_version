@@ -141,7 +141,7 @@ class ShopAdderActivity : AppCompatActivity() {
 
                 p0.children.forEach {
                     Log.d("Shop Adder Category", "fetch categories${it.toString()}")
-                    val shop = it.getValue()
+                    val shop = it.value
                     adapter1.add(categoryList(shop.toString()))
                     if (shop != null) {
                         Log.d("PreviousTests", "${shop}")
