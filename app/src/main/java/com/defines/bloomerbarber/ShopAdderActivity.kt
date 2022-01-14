@@ -213,7 +213,9 @@ class ShopAdderActivity : AppCompatActivity() {
                     google_map_link_shop,
                     array,
                     timings,
-                    categories
+                    categories,
+                    0.0,
+                    0
 
                 )
 
