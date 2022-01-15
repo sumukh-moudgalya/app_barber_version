@@ -1,5 +1,6 @@
 package com.defines.bloomerbarber
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintSet
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -37,7 +39,9 @@ class SettingsFragment : Fragment() {
 
         val shop_name: TextView=myFrag.findViewById(R.id.fragment_settings_shop_name)
         val user_name : TextView=myFrag.findViewById(R.id.fragment_settings_user_name)
+        val edit_shop: View=myFrag.findViewById(R.id.fragment_settings_edit_shop)
 
+        val signout : View? =myFrag.findViewById(R.id.fragment_settings_log_out)
         Glide.with(this).load(user!!.photoUrl.toString()).circleCrop().into(profile_pic_view)
         val ref=FirebaseDatabase.getInstance().getReference("barber/${user.uid}/username")
         ref.addListenerForSingleValueEvent(object : ValueEventListener{
@@ -60,6 +64,16 @@ class SettingsFragment : Fragment() {
 
             }
         })
+        signout!!.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            val intent= Intent(activity,LoginActivity::class.java)
+            intent.flags= Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        }
+        edit_shop.setOnClickListener {
+            val intent= Intent(activity,ShopModify::class.java)
+            startActivity(intent)
+        }
         return myFrag
     }
 
