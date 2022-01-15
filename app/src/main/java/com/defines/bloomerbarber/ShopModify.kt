@@ -42,13 +42,14 @@ class ShopModify : AppCompatActivity() {
     lateinit var ImageUri : Uri
     private lateinit var auth: FirebaseAuth
     var count=0
+    var shop = Shop()
     val array=ArrayList<String>()
     val categories=ArrayList<String>()
     var timings = HashMap<String, ArrayList<String>>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_modify)
-        var shop : Shop=Shop()
+
 
         val shop_name: EditText = findViewById(R.id.activity_shop_modify_name_shop)
         val address: EditText = findViewById(R.id.activity_shop_modify_shop_address)
@@ -69,7 +70,7 @@ class ShopModify : AppCompatActivity() {
             FirebaseDatabase.getInstance().getReference("/shop_info/${uid1}")
         ref1.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                val shop=snapshot.getValue(Shop::class.java)!!
+                shop=snapshot.getValue(Shop::class.java)!!
                 timings=shop.timings
 
                 for(i in shop.categories){
@@ -305,6 +306,16 @@ class ShopModify : AppCompatActivity() {
             val uid = user!!.uid
 
 
+
+            if(array.isEmpty()){
+                for(i in 0..3) {
+                    var ref = FirebaseStorage.getInstance().getReference("images/shop_images/$uid/$i")
+                    ref.downloadUrl.addOnSuccessListener {
+                        array.add(it.toString())
+                    }
+                }
+            }
+
             if (name_shop.isEmpty()) {
                 Toast.makeText(this, "Name is empty", Toast.LENGTH_SHORT).show()
             } else if (address_shop.isEmpty()) {
@@ -313,9 +324,8 @@ class ShopModify : AppCompatActivity() {
                 Toast.makeText(this, "City is empty", Toast.LENGTH_SHORT).show()
             } else if (google_map_link_shop.isEmpty()) {
                 Toast.makeText(this, "Map location link is empty", Toast.LENGTH_SHORT).show()
-            } else if (array.isEmpty()) {
-                Toast.makeText(this, "Please Add Images of the Shop", Toast.LENGTH_SHORT).show()
-            } else {
+            }
+             else {
                 val ref = FirebaseDatabase.getInstance().getReference("/shop_info/$uid")
                 val shop = Shop(
                     uid,
@@ -362,7 +372,9 @@ class ShopModify : AppCompatActivity() {
             Picasso.get()
                 .load(s)
                 .into(viewHolder.itemView.shop_images)
+
         }
+
 
         override fun getLayout(): Int {
             return R.layout.shop_images_show
