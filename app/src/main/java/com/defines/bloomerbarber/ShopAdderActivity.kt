@@ -58,9 +58,26 @@ class ShopAdderActivity : AppCompatActivity() {
         val fri_switch=findViewById<Switch>(R.id.activity_shop_adder_friday_switch)
         val sat_switch=findViewById<Switch>(R.id.activity_shop_adder_saturday_switch)
         val sun_switch=findViewById<Switch>(R.id.activity_shop_adder_sunday_switch)
+        var artist_no=1
 
 
+        val artists = resources.getStringArray(R.array.artists)
+        val spinner : Spinner= findViewById(R.id.spinner_artists)
+        if(spinner != null) {
+            val adapter12 = ArrayAdapter(this,android.R.layout.simple_spinner_item, artists)
+            spinner.adapter = adapter12
+        }
 
+        spinner.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                artist_no=artists[p2].toInt()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+        }
         timings.put("Monday", arrayListOf("NA","NA"))
         timings.put("Tuesday",arrayListOf("NA","NA"))
         timings.put("Wednesday",arrayListOf("NA","NA"))
@@ -215,7 +232,8 @@ class ShopAdderActivity : AppCompatActivity() {
                     timings,
                     categories,
                     0.0,
-                    0
+                    0,
+                    artist_no
 
                 )
 

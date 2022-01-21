@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BloomerBarber">
         <activity
+            android:name=".ArtistInfo"
+            android:exported="false" />
+        <activity
             android:name=".ShopModify"
             android:exported="false" />
         <activity

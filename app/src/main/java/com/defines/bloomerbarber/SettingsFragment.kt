@@ -71,7 +71,7 @@ class SettingsFragment : Fragment() {
             startActivity(intent)
         }
         edit_shop.setOnClickListener {
-            val intent= Intent(activity,ShopModify::class.java)
+            val intent= Intent(activity,ArtistInfo::class.java)
             startActivity(intent)
         }
         return myFrag
