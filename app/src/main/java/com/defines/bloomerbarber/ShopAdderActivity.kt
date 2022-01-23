@@ -233,8 +233,8 @@ class ShopAdderActivity : AppCompatActivity() {
                     categories,
                     0.0,
                     0,
-                    artist_no
-
+                    artist_no,
+                    0L
                 )
 
                 ref.setValue(shop).addOnSuccessListener {
@@ -253,7 +253,7 @@ class ShopAdderActivity : AppCompatActivity() {
                         "Shop has been successfully added saving",
                         Toast.LENGTH_SHORT
                     ).show()
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, ArtistAdderActivity::class.java)
                     startActivity(intent)
                 }.addOnFailureListener {
                     Log.d(TAG, "Failed to add{${it.message}")

@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BloomerBarber">
         <activity
+            android:name=".ArtistAdderActivity"
+            android:exported="false" />
+        <activity
             android:name=".ArtistInfo"
             android:exported="false" />
         <activity

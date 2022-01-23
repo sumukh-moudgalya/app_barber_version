@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity() {
                                     refUserPending.removeValue()
                                     bookingElement.orderStatus = "completed"
                                     val refCompletedBarber = FirebaseDatabase.getInstance()
-                                        .getReference("barber_orders/$uid/completed/{${bookingElement.timeStamp}")
+                                        .getReference("barber_orders/$uid/completed/${bookingElement.timeStamp}")
                                     refCompletedBarber.setValue(bookingElement)
                                         .addOnSuccessListener {
                                             Log.d(TAG, "refCompletedBarber has been updated")

@@ -12,9 +12,11 @@ class Barber(
     val email: String,
     var default_language: String,
     var userType: String,
-    var phoneNumber: String, val isShopDetailsUploaded: Boolean,
+    var phoneNumber: String,
+    val isShopDetailsUploaded: Boolean,
+    val isArtistDetailUploaded:Boolean
 
 ) : Parcelable,
     Serializable {
-    constructor() : this("", "", "", "", default_language = "english", "customer", "", false)
+    constructor() : this("", "", "", "", default_language = "english", "customer", "", false,false)
 }

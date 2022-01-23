@@ -15,9 +15,10 @@ class Shop (
     val categories : ArrayList<String>,
     val avgRating:Double,
     val numberOfRating:Int,
-    val no_of_artists : Int
+    val noOfArtists : Int,
+    val onClick:Long
 
         ):Parcelable,
 Serializable{
-    constructor():this("","","","","", ArrayList<String>(),HashMap<String,ArrayList<String>>(),ArrayList<String>(),0.0,0,1)
+    constructor():this("","","","","", ArrayList<String>(),HashMap<String,ArrayList<String>>(),ArrayList<String>(),0.0,0,1,1L)
 }

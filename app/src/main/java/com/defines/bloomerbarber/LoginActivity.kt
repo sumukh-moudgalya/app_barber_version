@@ -114,7 +114,8 @@ class LoginActivity : AppCompatActivity() {
                         uid,
                         user_name!!,
                         profileImageUrl.toString(),
-                        email.toString(),"english",userType,phoneNumber.toString(),isshopDetails
+                        email.toString(),"english",userType,phoneNumber.toString(),isshopDetails,
+                        false
                     )
 
 

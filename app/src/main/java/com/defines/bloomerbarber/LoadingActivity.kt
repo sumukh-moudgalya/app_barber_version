@@ -25,7 +25,9 @@ class LoadingActivity : AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_loading)
 
-
+//        val ref=FirebaseDatabase.getInstance().getReference("Categories_/")
+//        val cat= arrayListOf<String>("Hair Styling","Body Grooming","Hair Coloring","Spa and Recreation","Saloon")
+//        ref.setValue(cat)
         val app_logo: ImageView = findViewById(R.id.loading_activity_logo)
         val app_name: TextView=findViewById(R.id.loading_activity_app_name)
         val app_company:TextView=findViewById(R.id.loading_activity_intiative_tag_line)
@@ -49,11 +51,23 @@ class LoadingActivity : AppCompatActivity() {
             ref.get().addOnSuccessListener{
                 val isShop=it.value as Boolean
                 if (isShop){
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        val intent= Intent(this,MainActivity::class.java)
-                        startActivity(intent)
-                    },2000)
+                    val refArtist=FirebaseDatabase.getInstance().getReference("/barber/$uid/artistDetailUploaded")
+                    refArtist.get().addOnSuccessListener{
+                        val isArtist=it.value as Boolean
+                        if(isArtist){
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                val intent= Intent(this,MainActivity::class.java)
+                                startActivity(intent)
+                            },2000)
+                        }else{
+                            val intent= Intent(this,ArtistAdderActivity::class.java)
+                            startActivity(intent)
+                        }
+                    }
+
                 }else{
+
+
                     Handler(Looper.getMainLooper()).postDelayed({
                         val intent= Intent(this,ShopAdderActivity::class.java)
                         startActivity(intent)
