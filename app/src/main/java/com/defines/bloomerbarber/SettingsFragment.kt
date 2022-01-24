@@ -40,6 +40,7 @@ class SettingsFragment : Fragment() {
         val shop_name: TextView=myFrag.findViewById(R.id.fragment_settings_shop_name)
         val user_name : TextView=myFrag.findViewById(R.id.fragment_settings_user_name)
         val edit_shop: View=myFrag.findViewById(R.id.fragment_settings_edit_shop)
+        val share: View =myFrag.findViewById(R.id.fragment_settings_share)
 
         val signout : View? =myFrag.findViewById(R.id.fragment_settings_log_out)
         Glide.with(this).load(user!!.photoUrl.toString()).circleCrop().into(profile_pic_view)
@@ -71,8 +72,27 @@ class SettingsFragment : Fragment() {
             startActivity(intent)
         }
         edit_shop.setOnClickListener {
-            val intent= Intent(activity,ArtistInfo::class.java)
+            val intent= Intent(activity,ShopModify::class.java)
             startActivity(intent)
+        }
+        share.setOnClickListener {
+            val ref1=FirebaseDatabase.getInstance().getReference("shop_info/${user.uid}/promoCode")
+            ref1.addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val data=snapshot.value as String
+                    val message: String="Please use the promocode ${data} during installation of Bloomer App for reference and earn exciting offers."
+                    val intent =Intent()
+                    intent.action=Intent.ACTION_SEND
+                    intent.putExtra(Intent.EXTRA_TEXT,message)
+                    intent.type="text/plain"
+                    startActivity(Intent.createChooser(intent,"Share to:"))
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
+
         }
         return myFrag
     }

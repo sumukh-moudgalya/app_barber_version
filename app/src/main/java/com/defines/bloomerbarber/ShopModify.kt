@@ -339,7 +339,8 @@ class ShopModify : AppCompatActivity() {
                     0.0,
                     0,
                     0,
-                    0L
+                    0L,
+                    shop.promoCode
 
                 )
 

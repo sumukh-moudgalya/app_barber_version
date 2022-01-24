@@ -1,13 +1,16 @@
 package com.defines.bloomerbarber
 
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.format.DateFormat.format
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.View
 import android.view.animation.Animation
@@ -25,6 +28,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.categories_list.view.*
+import java.io.Serializable
 import java.lang.String.format
 import java.text.MessageFormat.format
 import java.util.*
@@ -208,6 +212,9 @@ class ShopAdderActivity : AppCompatActivity() {
             val google_map_link_shop = google_map_link.text.toString()
             val user = auth.currentUser
             val uid = user!!.uid
+            val simpleDateFormat = SimpleDateFormat("HH:mm:ss")
+            val currentDateAndTime: String = simpleDateFormat.format(Date())
+            val promoCode = (uid.toString().slice(1..2)+name_shop.slice(1..2)+currentDateAndTime.slice(3..4)+uid.slice(7..8)).toUpperCase()
 
 
             if (name_shop.isEmpty()) {
@@ -234,9 +241,20 @@ class ShopAdderActivity : AppCompatActivity() {
                     0.0,
                     0,
                     artist_no,
-                    0L
+                    0L,
+                    promoCode
                 )
 
+                val ref3=FirebaseDatabase.getInstance().getReference("shop_promo_gen/$promoCode")
+                val promo=ShopPromo(
+                    uid,
+                    arrayListOf()
+                )
+                ref3.setValue(promo).addOnSuccessListener {
+                    Log.d(TAG,"promo code added")
+                }.addOnFailureListener {
+                    Log.d(TAG,"$it")
+                }
                 ref.setValue(shop).addOnSuccessListener {
                     val ref2 = FirebaseDatabase.getInstance()
                         .getReference("/barber/$uid/shopDetailsUploaded")
@@ -253,8 +271,36 @@ class ShopAdderActivity : AppCompatActivity() {
                         "Shop has been successfully added saving",
                         Toast.LENGTH_SHORT
                     ).show()
-                    val intent = Intent(this, ArtistAdderActivity::class.java)
-                    startActivity(intent)
+                    val dialog = Dialog(this)
+                    dialog.setContentView(R.layout.promo_code_progress_bar)
+
+
+                    dialog.getWindow()!!.setBackgroundDrawable(ColorDrawable(0))
+                    val text : TextView=dialog.findViewById(R.id.share_text)
+                    text.text="The Promo Code of Your Shop is $promoCode . Please Share it to customers  " +
+                            "exciting offers."
+                    dialog.show()
+                    dialog.setCancelable(false)
+                    val dismissButton: TextView =
+                        dialog.findViewById(R.id.promo_share_cancel)
+                    dismissButton.setOnClickListener {
+                        dialog.cancel()
+                        val intent = Intent(this, ArtistAdderActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                    val confirmButton: TextView =
+                        dialog.findViewById(R.id.share_promo)
+                    confirmButton.setOnClickListener {
+                        val message: String="Please use the promocode $promoCode during installation of Bloomer App for reference and earn exciting offers."
+                        val intent =Intent()
+                        intent.action=Intent.ACTION_SEND
+                        intent.putExtra(Intent.EXTRA_TEXT,message)
+                        intent.type="text/plain"
+                        startActivity(Intent.createChooser(intent,"Share to:"))
+
+                    }
+
                 }.addOnFailureListener {
                     Log.d(TAG, "Failed to add{${it.message}")
                     Toast.makeText(this, "Error.Try again!!!", Toast.LENGTH_SHORT).show()
