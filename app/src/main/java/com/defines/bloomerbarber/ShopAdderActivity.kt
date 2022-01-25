@@ -4,8 +4,10 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.icu.text.SimpleDateFormat
+import android.location.Geocoder
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,7 +19,10 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -40,6 +45,7 @@ class ShopAdderActivity : AppCompatActivity() {
     lateinit var ImageUri : Uri
     private lateinit var auth: FirebaseAuth
     var count=0
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     var array=ArrayList<String>()
     val categories=ArrayList<String>()
     val timings = HashMap<String, ArrayList<String>>()
@@ -47,6 +53,8 @@ class ShopAdderActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(this)
         setContentView(R.layout.activity_shop_adder)
         val shop_name: EditText = findViewById(R.id.activity_shop_adder_name_shop)
         val address: EditText = findViewById(R.id.activity_shop_adder_shop_address)
@@ -64,7 +72,8 @@ class ShopAdderActivity : AppCompatActivity() {
         val sun_switch=findViewById<Switch>(R.id.activity_shop_adder_sunday_switch)
         var artist_no=1
 
-
+//fetching location
+        fetchlocation()
         val artists = resources.getStringArray(R.array.artists)
         val spinner : Spinner= findViewById(R.id.spinner_artists)
         if(spinner != null) {
@@ -89,6 +98,7 @@ class ShopAdderActivity : AppCompatActivity() {
         timings.put("Friday",arrayListOf("NA","NA"))
         timings.put("Saturday",arrayListOf("NA","NA"))
         timings.put("Sunday",arrayListOf("NA","NA"))
+
 
         mon_switch.setOnClickListener {
             val layout=findViewById<View>(R.id.constraintLayoutMonday)
@@ -333,6 +343,39 @@ class ShopAdderActivity : AppCompatActivity() {
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true)
         intent.action=Intent.ACTION_GET_CONTENT
         startActivityForResult(intent,100)
+    }
+    private fun fetchlocation() {
+
+        val task = fusedLocationProviderClient.lastLocation
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                101
+            )
+            return
+        }
+
+        task.addOnSuccessListener {
+            if (it != null) {
+                var geocoder = Geocoder(this, Locale.getDefault())
+                var adress = geocoder.getFromLocation(it.latitude, it.longitude, 1)
+                val cityname = adress[0].getAddressLine(0)
+                var hello = findViewById<EditText>(R.id.activity_shop_adder_shop_address)
+                hello.setText(cityname)
+                val city_name=findViewById<EditText>(R.id.activity_shop_adder_city_shop)
+                city_name.setText("${adress[0].locality}")
+            }
+        }
+
     }
 
     private fun timetopick(layout : View,switch : Switch,fromText: TextView,toText : TextView,day: String){

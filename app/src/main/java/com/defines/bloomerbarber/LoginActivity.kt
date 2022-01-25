@@ -133,7 +133,7 @@ class LoginActivity : AppCompatActivity() {
                     )
                     ref2.setValue(wallet).addOnSuccessListener {
                         Log.d(TAG, "Finally the user is saved to database")
-                        val intent= Intent(this,ShopAdderActivity::class.java)
+                        val intent= Intent(this,Permission::class.java)
                         startActivity(intent)
                         finish()
                     }.addOnFailureListener{

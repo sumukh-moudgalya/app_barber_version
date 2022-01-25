@@ -69,7 +69,7 @@ class LoadingActivity : AppCompatActivity() {
 
 
                     Handler(Looper.getMainLooper()).postDelayed({
-                        val intent= Intent(this,ShopAdderActivity::class.java)
+                        val intent= Intent(this,Permission::class.java)
                         startActivity(intent)
                     },2000)
                 }
