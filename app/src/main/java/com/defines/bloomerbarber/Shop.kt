@@ -17,9 +17,10 @@ class Shop (
     val numberOfRating:Int,
     val noOfArtists : Int,
     val onClick:Long,
-    val promoCode : String
+    val promoCode : String,
+    val orientation:String
 
         ):Parcelable,
 Serializable{
-    constructor():this("","","","","", ArrayList<String>(),HashMap<String,ArrayList<String>>(),ArrayList<String>(),0.0,0,1,1L,"")
+    constructor():this("","","","","", ArrayList<String>(),HashMap<String,ArrayList<String>>(),ArrayList<String>(),0.0,0,1,1L,"","")
 }

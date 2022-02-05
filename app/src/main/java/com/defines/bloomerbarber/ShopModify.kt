@@ -41,11 +41,11 @@ class ShopModify : AppCompatActivity() {
     private val context=this
     lateinit var ImageUri : Uri
     private lateinit var auth: FirebaseAuth
-    var count=0
-    var shop = Shop()
-    val array=ArrayList<String>()
-    val categories=ArrayList<String>()
-    var timings = HashMap<String, ArrayList<String>>()
+    private var count=0
+    private var shop = Shop()
+    private val array=ArrayList<String>()
+    private val categories=ArrayList<String>()
+    private var timings = HashMap<String, ArrayList<String>>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_modify)
@@ -327,7 +327,7 @@ class ShopModify : AppCompatActivity() {
             }
              else {
                 val ref = FirebaseDatabase.getInstance().getReference("/shop_info/$uid")
-                val shop = Shop(
+                val shoptemp = Shop(
                     uid,
                     name_shop,
                     address_shop,
@@ -340,11 +340,13 @@ class ShopModify : AppCompatActivity() {
                     0,
                     0,
                     0L,
-                    shop.promoCode
+                    shop.promoCode,
+                    shop.orientation
+
 
                 )
 
-                ref.setValue(shop).addOnSuccessListener {
+                ref.setValue(shoptemp).addOnSuccessListener {
                     val ref2 = FirebaseDatabase.getInstance()
                         .getReference("/barber/$uid/shopDetailsUploaded")
 

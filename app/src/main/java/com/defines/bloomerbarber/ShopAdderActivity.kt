@@ -20,6 +20,7 @@ import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -40,7 +41,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 private val TAG = "ShopAdderActivity"
-
+private var selectedSpeciality="None"
 class ShopAdderActivity : AppCompatActivity() {
     lateinit var ImageUri : Uri
     private lateinit var auth: FirebaseAuth
@@ -70,6 +71,62 @@ class ShopAdderActivity : AppCompatActivity() {
         val fri_switch=findViewById<Switch>(R.id.activity_shop_adder_friday_switch)
         val sat_switch=findViewById<Switch>(R.id.activity_shop_adder_saturday_switch)
         val sun_switch=findViewById<Switch>(R.id.activity_shop_adder_sunday_switch)
+        val maleFriendlyImage=findViewById<ImageView>(R.id.activity_shop_adder_male_oriented)
+        val femaleFriendlyImage=findViewById<ImageView>(R.id.activity_shop_adder_female_oriented)
+        val unisexFriendly=findViewById<ImageView>(R.id.activity_shop_adder_unisex_oriented)
+
+        val bounceAnim: Animation = AnimationUtils.loadAnimation(this,R.anim.bounce)
+
+        unisexFriendly.setOnClickListener {
+
+            if(selectedSpeciality=="UNISEX"){
+                selectedSpeciality="NONE"
+                unisexFriendly.background= ContextCompat.getDrawable(this, R.color.white)
+                unisexFriendly.animation=bounceAnim
+
+            }else{
+                selectedSpeciality="UNISEX"
+                maleFriendlyImage.background= ContextCompat.getDrawable(this, R.color.white)
+                femaleFriendlyImage.background=ContextCompat.getDrawable(this, R.color.white)
+                unisexFriendly.background=ContextCompat.getDrawable(this,R.drawable.see_more_back)
+                unisexFriendly.animation=bounceAnim
+            }
+
+
+
+        }
+        maleFriendlyImage.setOnClickListener {
+            if(selectedSpeciality=="MALE"){
+                selectedSpeciality="NONE"
+                maleFriendlyImage.background= ContextCompat.getDrawable(this, R.color.white)
+                maleFriendlyImage.animation=bounceAnim
+
+            }else{
+                selectedSpeciality="MALE"
+                unisexFriendly.background= ContextCompat.getDrawable(this, R.color.white)
+                femaleFriendlyImage.background=ContextCompat.getDrawable(this, R.color.white)
+                maleFriendlyImage.background=ContextCompat.getDrawable(this,R.drawable.see_more_back)
+                maleFriendlyImage.animation=bounceAnim
+
+            }
+
+        }
+
+        femaleFriendlyImage.setOnClickListener {
+            if(selectedSpeciality=="FEMALE"){
+                selectedSpeciality="NONE"
+                femaleFriendlyImage.background= ContextCompat.getDrawable(this, R.color.white)
+                femaleFriendlyImage.animation=bounceAnim
+
+            }else{
+                selectedSpeciality="FEMALE"
+                unisexFriendly.background= ContextCompat.getDrawable(this, R.color.white)
+                maleFriendlyImage.background=ContextCompat.getDrawable(this, R.color.white)
+                femaleFriendlyImage.background=ContextCompat.getDrawable(this,R.drawable.see_more_back)
+                femaleFriendlyImage.animation=bounceAnim
+
+            }
+        }
         var artist_no=1
 
 //fetching location
@@ -227,93 +284,104 @@ class ShopAdderActivity : AppCompatActivity() {
             val promoCode = (uid.toString().slice(1..2)+name_shop.slice(1..2)+currentDateAndTime.slice(3..4)+uid.slice(7..8)).toUpperCase()
 
 
-            if (name_shop.isEmpty()) {
-                Toast.makeText(this, "Name is empty", Toast.LENGTH_SHORT).show()
-            } else if (address_shop.isEmpty()) {
-                Toast.makeText(this, "Address is empty", Toast.LENGTH_SHORT).show()
-            } else if (city_shop.isEmpty()) {
-                Toast.makeText(this, "City is empty", Toast.LENGTH_SHORT).show()
-            } else if (google_map_link_shop.isEmpty()) {
-                Toast.makeText(this, "Map location link is empty", Toast.LENGTH_SHORT).show()
-            } else if (array.isEmpty()) {
-                Toast.makeText(this, "Please Add Images of the Shop", Toast.LENGTH_SHORT).show()
-            } else {
-                val ref = FirebaseDatabase.getInstance().getReference("/shop_info/$uid")
-                val shop = Shop(
-                    uid,
-                    name_shop,
-                    address_shop,
-                    city_shop,
-                    google_map_link_shop,
-                    array,
-                    timings,
-                    categories,
-                    0.0,
-                    0,
-                    artist_no,
-                    0L,
-                    promoCode
-                )
-
-                val ref3=FirebaseDatabase.getInstance().getReference("shop_promo_gen/$promoCode")
-                val promo=ShopPromo(
-                    uid,
-                    arrayListOf()
-                )
-                ref3.setValue(promo).addOnSuccessListener {
-                    Log.d(TAG,"promo code added")
-                }.addOnFailureListener {
-                    Log.d(TAG,"$it")
+            when {
+                name_shop.isEmpty() -> {
+                    Toast.makeText(this, "Name is empty", Toast.LENGTH_SHORT).show()
                 }
-                ref.setValue(shop).addOnSuccessListener {
-                    val ref2 = FirebaseDatabase.getInstance()
-                        .getReference("/barber/$uid/shopDetailsUploaded")
+                address_shop.isEmpty() -> {
+                    Toast.makeText(this, "Address is empty", Toast.LENGTH_SHORT).show()
+                }
+                city_shop.isEmpty() -> {
+                    Toast.makeText(this, "City is empty", Toast.LENGTH_SHORT).show()
+                }
+                google_map_link_shop.isEmpty() -> {
+                    Toast.makeText(this, "Map location link is empty", Toast.LENGTH_SHORT).show()
+                }
+                array.isEmpty() -> {
+                    Toast.makeText(this, "Please Add Images of the Shop", Toast.LENGTH_SHORT).show()
+                }
+                selectedSpeciality=="NONE" -> {
+                    Toast.makeText(this, "Please Add Images of the Shop", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    val ref = FirebaseDatabase.getInstance().getReference("/shop_info/$uid")
+                    val shop = Shop(
+                        uid,
+                        name_shop,
+                        address_shop,
+                        city_shop,
+                        google_map_link_shop,
+                        array,
+                        timings,
+                        categories,
+                        0.0,
+                        0,
+                        artist_no,
+                        0L,
+                        promoCode,
+                        selectedSpeciality
+                    )
 
-                    val isShop = true
-                    ref2.setValue(isShop).addOnSuccessListener {
-                        Log.d(TAG, "IsShop value has been updated")
+                    val ref3=FirebaseDatabase.getInstance().getReference("shop_promo_gen/$promoCode")
+                    val promo=ShopPromo(
+                        uid,
+                        arrayListOf()
+                    )
+                    ref3.setValue(promo).addOnSuccessListener {
+                        Log.d(TAG,"promo code added")
                     }.addOnFailureListener {
-                        Log.d(TAG, "IsShop value is NO$it")
+                        Log.d(TAG,"$it")
                     }
-                    Log.d(TAG, "Finally the user is saved to database")
-                    Toast.makeText(
-                        this,
-                        "Shop has been successfully added saving",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    val dialog = Dialog(this)
-                    dialog.setContentView(R.layout.promo_code_progress_bar)
+                    ref.setValue(shop).addOnSuccessListener {
+                        val ref2 = FirebaseDatabase.getInstance()
+                            .getReference("/barber/$uid/shopDetailsUploaded")
+
+                        val isShop = true
+                        ref2.setValue(isShop).addOnSuccessListener {
+                            Log.d(TAG, "IsShop value has been updated")
+                        }.addOnFailureListener {
+                            Log.d(TAG, "IsShop value is NO$it")
+                        }
+                        Log.d(TAG, "Finally the user is saved to database")
+                        Toast.makeText(
+                            this,
+                            "Shop has been successfully added saving",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        val dialog = Dialog(this)
+                        dialog.setContentView(R.layout.promo_code_progress_bar)
 
 
-                    dialog.getWindow()!!.setBackgroundDrawable(ColorDrawable(0))
-                    val text : TextView=dialog.findViewById(R.id.share_text)
-                    text.text="The Promo Code of Your Shop is $promoCode . Please Share it to customers  " +
-                            "exciting offers."
-                    dialog.show()
-                    dialog.setCancelable(false)
-                    val dismissButton: TextView =
-                        dialog.findViewById(R.id.promo_share_cancel)
-                    dismissButton.setOnClickListener {
-                        dialog.cancel()
-                        val intent = Intent(this, ArtistAdderActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                        dialog.getWindow()!!.setBackgroundDrawable(ColorDrawable(0))
+                        val text : TextView=dialog.findViewById(R.id.share_text)
+                        text.text="The Promo Code of Your Shop is $promoCode . Please Share it to customers  " +
+                                "exciting offers."
+                        dialog.show()
+                        dialog.setCancelable(false)
+                        val dismissButton: TextView =
+                            dialog.findViewById(R.id.promo_share_cancel)
+                        dismissButton.setOnClickListener {
+                            dialog.cancel()
+                            val intent = Intent(this, ArtistAdderActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                        val confirmButton: TextView =
+                            dialog.findViewById(R.id.share_promo)
+                        confirmButton.setOnClickListener {
+                            val message: String="Please use the promocode $promoCode during installation of Bloomer App for reference and earn exciting offers."
+                            val intent =Intent()
+                            intent.action=Intent.ACTION_SEND
+                            intent.putExtra(Intent.EXTRA_TEXT,message)
+                            intent.type="text/plain"
+                            startActivity(Intent.createChooser(intent,"Share to:"))
+
+                        }
+
+                    }.addOnFailureListener {
+                        Log.d(TAG, "Failed to add{${it.message}")
+                        Toast.makeText(this, "Error.Try again!!!", Toast.LENGTH_SHORT).show()
                     }
-                    val confirmButton: TextView =
-                        dialog.findViewById(R.id.share_promo)
-                    confirmButton.setOnClickListener {
-                        val message: String="Please use the promocode $promoCode during installation of Bloomer App for reference and earn exciting offers."
-                        val intent =Intent()
-                        intent.action=Intent.ACTION_SEND
-                        intent.putExtra(Intent.EXTRA_TEXT,message)
-                        intent.type="text/plain"
-                        startActivity(Intent.createChooser(intent,"Share to:"))
-
-                    }
-
-                }.addOnFailureListener {
-                    Log.d(TAG, "Failed to add{${it.message}")
-                    Toast.makeText(this, "Error.Try again!!!", Toast.LENGTH_SHORT).show()
                 }
             }
         }
